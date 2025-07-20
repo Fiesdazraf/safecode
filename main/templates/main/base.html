@@ -2,21 +2,30 @@
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
     <title>{% block title %}سایت من{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'main/style.css' %}">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="{% url 'home' %}">خانه</a> |
-            <a href="{% url 'portfolio' %}">نمونه‌کارها</a> |
-            <a href="{% url 'contact' %}">تماس با من</a>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="{% url 'home' %}" class="nav-link">خانه</a>
+                <a href="{% url 'portfolio' %}" class="nav-link">نمونه‌کارها</a>
+                <a href="{% url 'contact' %}" class="nav-link">تماس با من</a>
+            </div>
         </nav>
+        <h1 class="site-title">خوش آمدید به سایت من</h1>
     </header>
-    {% block content %}{% endblock %}
-    <footer>
-        <p>© 2025 - همه حقوق محفوظ است</p>
+
+    <main class="content-area">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 - همه حقوق محفوظ است | طراحی توسط من</p>
     </footer>
 </body>
 </html>
