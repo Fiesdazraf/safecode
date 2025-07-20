@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    
+    <h2>تماس با من</h2>
+    
+    <form method="post">
+    
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ارسال</button>
+    
+    </form>
+
+{% endblock %}
