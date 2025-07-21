@@ -7,4 +7,4 @@ class Contact(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.email}"
+        return f"{self.name} with this email: '{self.email}' said {self.message[:20]}"
