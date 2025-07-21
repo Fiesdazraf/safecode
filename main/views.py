@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import ContactForm
-
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 
 def home(request):
@@ -14,10 +15,14 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
+            contact = form.save()
+
+            subject = f"New message from {contact.name}"
+            message = f"Name: {contact.name}\nEmail: {contact.email}\n\nMessage:\n{contact.message}"
+            send_mail(subject, message, settings.EMAIL_HOST_USER, ['yourgmail@gmail.com'])
+
             return render(request, 'main/contact_success.html')
-        else:
-            print(form.errors)
     else:
         form = ContactForm()
     return render(request, 'main/contact.html', {'form': form})
+
