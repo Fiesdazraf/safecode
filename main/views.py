@@ -20,7 +20,7 @@ def contact(request):
 
             subject = f"New message from {contact.name}"
             message = f"Name: {contact.name}\nEmail: {contact.email}\n\nMessage:\n{contact.message}"
-            send_mail(subject, message, settings.EMAIL_HOST_USER, ['yourgmail@gmail.com'])
+            send_mail(subject, message, settings.EMAIL_HOST_USER, ['farzad.seif30@gmail.com'])
 
             return render(request, 'main/contact_success.html')
     else:
