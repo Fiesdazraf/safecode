@@ -6,10 +6,25 @@
 <div class="content-area">
     <h1 style="text-align: center;">نمونه‌کارهای من</h1>
 
-    <div class="empty-portfolio">
-        <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="No Projects Yet">
-        <h2>هنوز نمونه‌کاری ثبت نشده است</h2>
-        <p>به زودی پروژه‌های حرفه‌ای و خلاقانه در این بخش قرار خواهد گرفت!</p>
-    </div>
+    {% if items %}
+        <div class="portfolio-grid">
+            {% for item in items %}
+                <div class="portfolio-card">
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description|linebreaksbr }}</p>
+                    {% if item.project_url %}
+                        <a href="{{ item.project_url }}" target="_blank" rel="noopener">مشاهده پروژه</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-portfolio">
+            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="No Projects Yet">
+            <h2>هنوز نمونه‌کاری ثبت نشده است</h2>
+            <p>به زودی پروژه‌های حرفه‌ای و خلاقانه در این بخش قرار خواهد گرفت!</p>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

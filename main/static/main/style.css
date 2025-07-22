@@ -18,6 +18,7 @@ body {
 }
 
 /* Header */
+/* Header */
 .site-header {
     background: linear-gradient(90deg, #667eea, #764ba2);
     color: white;
@@ -27,43 +28,48 @@ body {
     animation: fadeDown 1s ease forwards;
 }
 
-.navbar .container {
+.navbar {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 40px;
+    font-family: 'Vazir', sans-serif;
 }
 
 .nav-link {
-    position: relative;
-    display: inline-block;
     color: white;
     text-decoration: none;
-    font-weight: bold;
-    padding: 5px 10px;
-    overflow: hidden;
+    font-weight: 700;
+    font-size: 1.2rem;
+    position: relative;
+    padding: 5px 0;
     transition: color 0.3s ease;
 }
 
-.nav-link::before {
-    content: "";
+.nav-link::after {
+    content: '';
     position: absolute;
+    width: 0%;
+    height: 2px;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 100%;
-    height: 3px;
-    background: #ffd369;
-    transition: transform 0.3s ease;
-    transform-origin: center;
-    border-radius: 5px;
-}
-
-.nav-link:hover::before {
-    transform: translateX(-50%) scaleX(1);
+    left: 0;
+    background-color: #ffd369;
+    transition: width 0.3s ease;
 }
 
 .nav-link:hover {
     color: #ffd369;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
 .site-title {
@@ -217,3 +223,58 @@ body {
     font-size: 1rem;
     color: #777;
 }
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.portfolio-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.portfolio-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.portfolio-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.portfolio-card p {
+    color: #555;
+    font-size: 0.95rem;
+    min-height: 60px;
+}
+
+.portfolio-card a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #6c63ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.portfolio-card a:hover {
+    color: #574bff;
+}
+
+/* بلاگ - لیست مطالب */

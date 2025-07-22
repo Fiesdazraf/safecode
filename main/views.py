@@ -1,16 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .forms import ContactForm
-from django.core.mail import send_mail
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
+from .models import PortfolioItem
+
 # Create your views here.
 
 def home(request):
     return render(request, 'main/home.html')
 
 def portfolio(request):
-    return render(request, 'main/portfolio.html')
+    items = PortfolioItem.objects.order_by('-created_at')  # جدیدترین‌ها اول
+    return render(request, 'main/portfolio.html', {'items': items})
 
 def contact(request):
     if request.method == 'POST':
@@ -41,4 +43,3 @@ def test_email(request):
         return HttpResponse('Invalid header found.')
     except Exception as e:
         return HttpResponse(f'Error occurred: {e}')
-

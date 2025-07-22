@@ -9,16 +9,13 @@
     <link rel="stylesheet" href="{% static 'main/style.css' %}">
 </head>
 <body>
-    <header class="site-header">
-        <nav class="navbar">
-            <div class="container">
-                <a href="{% url 'home' %}" class="nav-link">خانه</a>
-                <a href="{% url 'portfolio' %}" class="nav-link">نمونه‌کارها</a>
-                <a href="{% url 'contact' %}" class="nav-link">تماس با من</a>
-            </div>
-        </nav>
-        <h1 class="site-title">به وبسایت من خوش آمدید.</h1>
-    </header>
+<header class="site-header">
+    <nav class="navbar container">
+        <a href="{% url 'home' %}" class="nav-link">خانه</a>
+        <a href="{% url 'portfolio' %}" class="nav-link">نمونه کارها</a>
+        <a href="{% url 'contact' %}" class="nav-link">تماس با من</a>
+    </nav>
+</header>
 
     <main class="content-area">
         {% block content %}{% endblock %}
