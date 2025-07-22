@@ -1,12 +1,22 @@
 {% extends 'main/base.html' %}
 {% block title %}Contact{% endblock %}
 {% block content %}
-<div class="content-area">
-    <h2>تماس با من</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">ارسال پیام</button>
-    </form>
+<div class="contact-form">
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      {{ form.name.label_tag }}
+      {{ form.name }}
+    </div>
+    <div>
+      {{ form.email.label_tag }}
+      {{ form.email }}
+    </div>
+    <div>
+      {{ form.message.label_tag }}
+      {{ form.message }}
+    </div>
+    <button type="submit">ارسال پیام</button>
+  </form>
 </div>
 {% endblock %}
