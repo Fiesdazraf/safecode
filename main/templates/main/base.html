@@ -3,26 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
     <title>{% block title %}سایت من{% endblock %}</title>
     {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <!-- Vazir Font -->
+    <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <style>
+        body, h1, h2, h3, h4, h5, h6, .navbar, .footer, .btn { font-family: 'Vazir', sans-serif !important; }
+    </style>
 </head>
-<body>
-<header class="site-header">
-    <nav class="navbar container">
-        <a href="{% url 'home' %}" class="nav-link">خانه</a>
-        <a href="{% url 'portfolio' %}" class="nav-link">نمونه کارها</a>
-        <a href="{% url 'contact' %}" class="nav-link">تماس با من</a>
-    </nav>
-</header>
-
-    <main class="content-area">
+<body class="bg-light d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="{% url 'home' %}">سایت من</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="تغییر منو">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">خانه</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'portfolio' %}">نمونه کارها</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">تماس با من</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="flex-fill container py-4">
         {% block content %}{% endblock %}
     </main>
-
-    <footer class="site-footer">
-        <p>© 2025 - همه حقوق محفوظ است | طراحی توسط فرزاد سیف</p>
+    <footer class="bg-primary text-white text-center py-3 mt-auto shadow-sm">
+        <div class="container">
+            <p class="mb-0">© 2025 - همه حقوق محفوظ است | طراحی توسط فرزاد سیف</p>
+        </div>
     </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
