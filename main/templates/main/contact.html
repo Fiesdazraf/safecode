@@ -2,21 +2,66 @@
 {% block title %}Contact{% endblock %}
 {% block content %}
 <div class="contact-form">
-  <form method="post">
+  {% if success %}
+    <div id="success-alert" class="alert alert-success animate__animated animate__fadeInDown" role="alert">
+      پیام شما با موفقیت ارسال شد!
+    </div>
+  {% endif %}
+  <div id="form-alert" class="alert alert-danger d-none animate__animated animate__shakeX" role="alert"></div>
+  <form method="post" class="needs-validation" novalidate id="contactForm">
     {% csrf_token %}
-    <div>
+    <div class="mb-3">
       {{ form.name.label_tag }}
       {{ form.name }}
     </div>
-    <div>
+    <div class="mb-3">
       {{ form.email.label_tag }}
       {{ form.email }}
     </div>
-    <div>
+    <div class="mb-3">
       {{ form.message.label_tag }}
       {{ form.message }}
     </div>
-    <button type="submit">ارسال پیام</button>
+    <button type="submit" class="btn btn-primary w-100">ارسال پیام</button>
   </form>
 </div>
+<script>
+// اعتبارسنجی فرم تماس با انیمیشن و نمایش هشدار
+const form = document.getElementById('contactForm');
+const alertBox = document.getElementById('form-alert');
+const fields = form.querySelectorAll('input, textarea');
+
+form.addEventListener('submit', function(e) {
+  let valid = true;
+  let firstInvalid = null;
+  fields.forEach(field => {
+    if (!field.value.trim()) {
+      valid = false;
+      field.classList.add('is-invalid', 'animate__animated', 'animate__shakeX');
+      if (!firstInvalid) firstInvalid = field;
+    }
+  });
+  if (!valid) {
+    e.preventDefault();
+    alertBox.textContent = 'لطفاً همه فیلدها را پر کنید.';
+    alertBox.classList.remove('d-none');
+    alertBox.classList.add('animate__shakeX');
+    if (firstInvalid) firstInvalid.focus();
+  }
+});
+fields.forEach(field => {
+  field.addEventListener('focus', function() {
+    field.classList.remove('is-invalid', 'animate__animated', 'animate__shakeX');
+    alertBox.classList.add('d-none');
+  });
+});
+// پیام موفقیت بعد از چند ثانیه محو شود
+const successAlert = document.getElementById('success-alert');
+if (successAlert) {
+  setTimeout(() => {
+    successAlert.classList.add('animate__fadeOutUp');
+    setTimeout(() => successAlert.remove(), 1000);
+  }, 3500);
+}
+</script>
 {% endblock %}

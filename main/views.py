@@ -15,6 +15,7 @@ def portfolio(request):
     return render(request, 'main/portfolio.html', {'items': items})
 
 def contact(request):
+    success = False
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -24,10 +25,11 @@ def contact(request):
             message = f"Name: {contact.name}\nEmail: {contact.email}\n\nMessage:\n{contact.message}"
             send_mail(subject, message, settings.EMAIL_HOST_USER, ['farzad.seif30@gmail.com'])
 
-            return render(request, 'main/contact_success.html')
+            success = True
+            form = ContactForm()  # فرم خالی شود
     else:
         form = ContactForm()
-    return render(request, 'main/contact.html', {'form': form})
+    return render(request, 'main/contact.html', {'form': form, 'success': success})
 
 def test_email(request):
     try:
