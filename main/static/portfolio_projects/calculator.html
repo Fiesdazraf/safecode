@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ماشین‌حساب هوشمند - نمونه‌کار</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazir', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .calculator-container {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+
+        .display {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .expression {
+            font-size: 16px;
+            opacity: 0.8;
+            text-align: left;
+            direction: ltr;
+            margin-bottom: 10px;
+            min-height: 20px;
+        }
+
+        .result {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: left;
+            direction: ltr;
+            word-break: break-all;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-number {
+            background: white;
+            color: #333;
+            border: 2px solid #e9ecef;
+        }
+
+        .btn-number:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+
+        .btn-operator {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+
+        .btn-operator:hover {
+            background: linear-gradient(135deg, #ee5a24, #ff6b6b);
+        }
+
+        .btn-clear {
+            background: linear-gradient(135deg, #feca57, #ff9ff3);
+            color: white;
+        }
+
+        .btn-clear:hover {
+            background: linear-gradient(135deg, #ff9ff3, #feca57);
+        }
+
+        .btn-equals {
+            background: linear-gradient(135deg, #48dbfb, #0abde3);
+            color: white;
+            grid-column: span 2;
+        }
+
+        .btn-equals:hover {
+            background: linear-gradient(135deg, #0abde3, #48dbfb);
+        }
+
+        .btn-zero {
+            grid-column: span 2;
+        }
+
+        .history {
+            margin-top: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .history h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+            font-family: 'Courier New', monospace;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-expression {
+            color: #6c757d;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .history-result {
+            color: #667eea;
+            font-weight: bold;
+            direction: ltr;
+        }
+
+        .clear-history {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .clear-history:hover {
+            background: #c82333;
+        }
+
+        .empty-history {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 20px 0;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .btn-function {
+            background: linear-gradient(135deg, #a55eea, #26de81);
+            color: white;
+            font-size: 14px;
+        }
+
+        .btn-function:hover {
+            background: linear-gradient(135deg, #26de81, #a55eea);
+        }
+
+        @media (max-width: 480px) {
+            .calculator-container {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 15px;
+                font-size: 18px;
+            }
+            
+            .result {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="header">
+            <h1>🧮 ماشین‌حساب</h1>
+            <p>ماشین‌حساب پیشرفته و هوشمند</p>
+        </div>
+
+        <div class="display">
+            <div class="expression" id="expression"></div>
+            <div class="result" id="result">0</div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-clear" onclick="calculator.clear()">C</button>
+            <button class="btn btn-clear" onclick="calculator.clearEntry()">CE</button>
+            <button class="btn btn-operator" onclick="calculator.deleteLast()">⌫</button>
+            <button class="btn btn-operator" onclick="calculator.inputOperator('/')" title="تقسیم">÷</button>
+
+            <button class="btn btn-function" onclick="calculator.inputFunction('Math.sin(')" title="سینوس">sin</button>
+            <button class="btn btn-function" onclick="calculator.inputFunction('Math.cos(')" title="کسینوس">cos</button>
+            <button class="btn btn-function" onclick="calculator.inputFunction('Math.tan(')" title="تانژانت">tan</button>
+            <button class="btn btn-operator" onclick="calculator.inputOperator('*')" title="ضرب">×</button>
+
+            <button class="btn btn-function" onclick="calculator.inputFunction('Math.sqrt(')" title="جذر">√</button>
+            <button class="btn btn-function" onclick="calculator.inputOperator('^')" title="توان">x^y</button>
+            <button class="btn btn-function" onclick="calculator.inputFunction('Math.log(')" title="لگاریتم">log</button>
+            <button class="btn btn-operator" onclick="calculator.inputOperator('-')" title="تفریق">-</button>
+
+            <button class="btn btn-number" onclick="calculator.inputNumber('7')">7</button>
+            <button class="btn btn-number" onclick="calculator.inputNumber('8')">8</button>
+            <button class="btn btn-number" onclick="calculator.inputNumber('9')">9</button>
+            <button class="btn btn-operator" onclick="calculator.inputOperator('+')" title="جمع">+</button>
+
+            <button class="btn btn-number" onclick="calculator.inputNumber('4')">4</button>
+            <button class="btn btn-number" onclick="calculator.inputNumber('5')">5</button>
+            <button class="btn btn-number" onclick="calculator.inputNumber('6')">6</button>
+            <button class="btn btn-number" onclick="calculator.inputNumber('.')">.</button>
+
+            <button class="btn btn-number" onclick="calculator.inputNumber('1')">1</button>
+            <button class="btn btn-number" onclick="calculator.inputNumber('2')">2</button>
+            <button class="btn btn-number" onclick="calculator.inputNumber('3')">3</button>
+            <button class="btn btn-function" onclick="calculator.inputNumber('(')">(</button>
+
+            <button class="btn btn-number btn-zero" onclick="calculator.inputNumber('0')">0</button>
+            <button class="btn btn-function" onclick="calculator.inputNumber(')')">)</button>
+            <button class="btn btn-equals" onclick="calculator.calculate()">=</button>
+        </div>
+
+        <div class="history">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>📊 تاریخچه محاسبات</h3>
+                <button class="clear-history" onclick="calculator.clearHistory()">پاک کردن</button>
+            </div>
+            <div id="historyList">
+                <div class="empty-history">هنوز محاسبه‌ای انجام نشده</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class Calculator {
+            constructor() {
+                this.expression = '';
+                this.result = '0';
+                this.history = JSON.parse(localStorage.getItem('calculator-history')) || [];
+                this.updateDisplay();
+                this.updateHistory();
+                this.bindKeyboard();
+            }
+
+            bindKeyboard() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.key >= '0' && e.key <= '9') {
+                        this.inputNumber(e.key);
+                    } else if (['+', '-', '*', '/'].includes(e.key)) {
+                        this.inputOperator(e.key);
+                    } else if (e.key === 'Enter' || e.key === '=') {
+                        this.calculate();
+                    } else if (e.key === 'Escape') {
+                        this.clear();
+                    } else if (e.key === 'Backspace') {
+                        this.deleteLast();
+                    } else if (e.key === '.') {
+                        this.inputNumber('.');
+                    }
+                });
+            }
+
+            inputNumber(num) {
+                if (this.result !== '0' && this.expression === '') {
+                    this.expression = '';
+                }
+                this.expression += num;
+                this.updateDisplay();
+            }
+
+            inputOperator(op) {
+                if (this.expression === '' && this.result !== '0') {
+                    this.expression = this.result;
+                }
+                
+                if (this.expression !== '') {
+                    const lastChar = this.expression.slice(-1);
+                    if (['+', '-', '*', '/', '^'].includes(lastChar)) {
+                        this.expression = this.expression.slice(0, -1);
+                    }
+                    this.expression += op;
+                    this.updateDisplay();
+                }
+            }
+
+            inputFunction(func) {
+                this.expression += func;
+                this.updateDisplay();
+            }
+
+            deleteLast() {
+                this.expression = this.expression.slice(0, -1);
+                this.updateDisplay();
+            }
+
+            clear() {
+                this.expression = '';
+                this.result = '0';
+                this.updateDisplay();
+            }
+
+            clearEntry() {
+                this.expression = '';
+                this.updateDisplay();
+            }
+
+            calculate() {
+                if (this.expression === '') return;
+
+                try {
+                    // Replace custom operators with JavaScript equivalents
+                    let evalExpression = this.expression
+                        .replace(/×/g, '*')
+                        .replace(/÷/g, '/')
+                        .replace(/\^/g, '**');
+
+                    // Handle mathematical functions
+                    evalExpression = evalExpression
+                        .replace(/sin\(/g, 'Math.sin(')
+                        .replace(/cos\(/g, 'Math.cos(')
+                        .replace(/tan\(/g, 'Math.tan(')
+                        .replace(/log\(/g, 'Math.log10(')
+                        .replace(/ln\(/g, 'Math.log(')
+                        .replace(/sqrt\(/g, 'Math.sqrt(');
+
+                    const result = eval(evalExpression);
+                    
+                    if (isNaN(result) || !isFinite(result)) {
+                        throw new Error('Invalid calculation');
+                    }
+
+                    const formattedResult = this.formatNumber(result);
+                    
+                    // Add to history
+                    this.addToHistory(this.expression, formattedResult);
+                    
+                    this.result = formattedResult;
+                    this.expression = '';
+                    this.updateDisplay();
+                    
+                } catch (error) {
+                    this.result = 'خطا';
+                    this.expression = '';
+                    this.updateDisplay();
+                    
+                    // Add error animation
+                    const display = document.querySelector('.display');
+                    display.classList.add('error');
+                    setTimeout(() => display.classList.remove('error'), 500);
+                }
+            }
+
+            formatNumber(num) {
+                if (Number.isInteger(num)) {
+                    return num.toString();
+                } else {
+                    return parseFloat(num.toFixed(10)).toString();
+                }
+            }
+
+            addToHistory(expression, result) {
+                const historyItem = {
+                    expression: expression,
+                    result: result,
+                    timestamp: new Date().toLocaleString('fa-IR')
+                };
+                
+                this.history.unshift(historyItem);
+                
+                // Keep only last 10 calculations
+                if (this.history.length > 10) {
+                    this.history = this.history.slice(0, 10);
+                }
+                
+                localStorage.setItem('calculator-history', JSON.stringify(this.history));
+                this.updateHistory();
+            }
+
+            updateHistory() {
+                const historyList = document.getElementById('historyList');
+                
+                if (this.history.length === 0) {
+                    historyList.innerHTML = '<div class="empty-history">هنوز محاسبه‌ای انجام نشده</div>';
+                    return;
+                }
+                
+                historyList.innerHTML = this.history.map(item => `
+                    <div class="history-item" onclick="calculator.useHistoryItem('${item.expression}', '${item.result}')">
+                        <span class="history-expression">${item.expression}</span>
+                        <span class="history-result">${item.result}</span>
+                    </div>
+                `).join('');
+            }
+
+            useHistoryItem(expression, result) {
+                this.expression = expression;
+                this.result = result;
+                this.updateDisplay();
+            }
+
+            clearHistory() {
+                this.history = [];
+                localStorage.removeItem('calculator-history');
+                this.updateHistory();
+            }
+
+            updateDisplay() {
+                document.getElementById('expression').textContent = this.expression || '';
+                document.getElementById('result').textContent = this.result;
+            }
+        }
+
+        const calculator = new Calculator();
+    </script>
+</body>
+</html>

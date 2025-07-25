@@ -4,20 +4,38 @@
 
 {% block content %}
 <div class="content-area">
-    <h1 style="text-align: center;">نمونه‌کارهای من</h1>
+    <h1 style="text-align: center;">🎨 نمونه‌کارهای من</h1>
+    <p style="text-align: center; color: #6c757d; font-size: 1.2em; margin-bottom: 40px;">
+        مجموعه‌ای از پروژه‌های طراحی و توسعه وب که با عشق و دقت ساخته شده‌اند
+    </p>
 
     {% if items %}
         <div class="portfolio-grid">
             {% for item in items %}
                 <div class="portfolio-card">
-                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
-                    <h3>{{ item.title }}</h3>
-                    <p>{{ item.description|linebreaksbr }}</p>
-                    {% if item.project_url %}
-                        <a href="{{ item.project_url }}" target="_blank" rel="noopener">مشاهده پروژه</a>
-                    {% endif %}
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}" loading="lazy">
+                    <div class="card-body">
+                        <h3>{{ item.title }}</h3>
+                        <p>{{ item.description|linebreaksbr|truncatewords:30 }}</p>
+                        {% if item.project_url %}
+                            <a href="{{ item.project_url }}" target="_blank" rel="noopener">
+                                <i class="bi bi-eye"></i> مشاهده پروژه
+                            </a>
+                        {% else %}
+                            <span style="color: #6c757d; font-style: italic;">
+                                <i class="bi bi-gear"></i> در حال توسعه
+                            </span>
+                        {% endif %}
+                    </div>
                 </div>
             {% endfor %}
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px;">
+            <p style="color: #6c757d; font-size: 1.1em;">
+                <i class="bi bi-lightbulb"></i> 
+                این تنها بخشی از کارهای من است. برای دیدن پروژه‌های بیشتر با من تماس بگیرید!
+            </p>
         </div>
     {% else %}
         <div class="empty-portfolio">

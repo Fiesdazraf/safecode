@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آب و هوا - نمونه‌کار</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazir', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .weather-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #0984e3;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #636e72;
+            font-size: 1.1em;
+        }
+
+        .search-section {
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #74b9ff;
+            box-shadow: 0 0 0 3px rgba(116, 185, 255, 0.1);
+        }
+
+        .search-btn {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(116, 185, 255, 0.3);
+        }
+
+        .quick-cities {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .city-chip {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .city-chip:hover {
+            background: #74b9ff;
+            color: white;
+            border-color: #74b9ff;
+        }
+
+        .weather-display {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .current-weather {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .city-name {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .current-temp {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .weather-desc {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .weather-icon {
+            font-size: 5em;
+            margin: 20px 0;
+        }
+
+        .weather-details {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #636e72;
+            font-weight: bold;
+        }
+
+        .detail-value {
+            color: #2d3436;
+            font-size: 1.1em;
+        }
+
+        .forecast-section {
+            display: none;
+        }
+
+        .forecast-title {
+            color: #0984e3;
+            font-size: 1.8em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .forecast-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .forecast-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .forecast-day {
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .forecast-icon {
+            font-size: 2.5em;
+            margin: 10px 0;
+        }
+
+        .forecast-temp {
+            color: #0984e3;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .forecast-desc {
+            color: #636e72;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #636e72;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #74b9ff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ff7675;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .demo-note {
+            background: #ffeaa7;
+            border: 2px solid #fdcb6e;
+            color: #2d3436;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .weather-display {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .forecast-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-container">
+        <div class="header">
+            <h1>🌤️ آب و هوا</h1>
+            <p>پیش‌بینی آب و هوای دقیق و به‌روز</p>
+        </div>
+
+        <div class="demo-note">
+            📝 توجه: این یک نمونه‌کار نمایشی است و از داده‌های تصادفی استفاده می‌کند.
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" class="search-input" id="cityInput" placeholder="نام شهر را وارد کنید...">
+                <button class="search-btn" onclick="searchWeather()">جستجو</button>
+            </div>
+            
+            <div class="quick-cities">
+                <div class="city-chip" onclick="quickSearch('تهران')">تهران</div>
+                <div class="city-chip" onclick="quickSearch('اصفهان')">اصفهان</div>
+                <div class="city-chip" onclick="quickSearch('شیراز')">شیراز</div>
+                <div class="city-chip" onclick="quickSearch('مشهد')">مشهد</div>
+                <div class="city-chip" onclick="quickSearch('تبریز')">تبریز</div>
+            </div>
+        </div>
+
+        <div class="error" id="errorMessage"></div>
+
+        <div class="loading" id="loadingDiv" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>در حال دریافت اطلاعات آب و هوا...</p>
+        </div>
+
+        <div class="weather-display" id="weatherDisplay">
+            <div class="current-weather">
+                <div class="city-name" id="cityName">تهران</div>
+                <div class="weather-icon" id="weatherIcon">☀️</div>
+                <div class="current-temp" id="currentTemp">25°C</div>
+                <div class="weather-desc" id="weatherDesc">آسمان صاف</div>
+            </div>
+
+            <div class="weather-details">
+                <div class="detail-row">
+                    <span class="detail-label">🌡️ احساس دما</span>
+                    <span class="detail-value" id="feelsLike">28°C</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">💧 رطوبت</span>
+                    <span class="detail-value" id="humidity">65%</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">💨 باد</span>
+                    <span class="detail-value" id="windSpeed">15 کیلومتر بر ساعت</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">👁️ دید</span>
+                    <span class="detail-value" id="visibility">10 کیلومتر</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">📊 فشار هوا</span>
+                    <span class="detail-value" id="pressure">1013 hPa</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">🌅 طلوع خورشید</span>
+                    <span class="detail-value" id="sunrise">06:30</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">🌇 غروب خورشید</span>
+                    <span class="detail-value" id="sunset">18:45</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="forecast-section" id="forecastSection">
+            <h2 class="forecast-title">پیش‌بینی ۵ روزه</h2>
+            <div class="forecast-grid" id="forecastGrid">
+                <!-- Forecast cards will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const weatherData = {
+            'تهران': {
+                temp: 25,
+                desc: 'آسمان صاف',
+                icon: '☀️',
+                feelsLike: 28,
+                humidity: 65,
+                windSpeed: 15,
+                visibility: 10,
+                pressure: 1013,
+                sunrise: '06:30',
+                sunset: '18:45'
+            },
+            'اصفهان': {
+                temp: 22,
+                desc: 'ابری',
+                icon: '☁️',
+                feelsLike: 24,
+                humidity: 70,
+                windSpeed: 12,
+                visibility: 8,
+                pressure: 1015,
+                sunrise: '06:35',
+                sunset: '18:40'
+            },
+            'شیراز': {
+                temp: 28,
+                desc: 'آسمان صاف',
+                icon: '🌞',
+                feelsLike: 32,
+                humidity: 55,
+                windSpeed: 18,
+                visibility: 12,
+                pressure: 1010,
+                sunrise: '06:25',
+                sunset: '18:50'
+            },
+            'مشهد': {
+                temp: 20,
+                desc: 'باران خفیف',
+                icon: '🌧️',
+                feelsLike: 18,
+                humidity: 85,
+                windSpeed: 20,
+                visibility: 5,
+                pressure: 1008,
+                sunrise: '06:40',
+                sunset: '18:35'
+            },
+            'تبریز': {
+                temp: 15,
+                desc: 'برفی',
+                icon: '❄️',
+                feelsLike: 12,
+                humidity: 80,
+                windSpeed: 25,
+                visibility: 3,
+                pressure: 1020,
+                sunrise: '06:50',
+                sunset: '18:20'
+            }
+        };
+
+        const weatherIcons = ['☀️', '☁️', '🌧️', '⛈️', '❄️', '🌤️', '⛅', '🌦️'];
+        const weatherDescs = ['آسمان صاف', 'ابری', 'باران خفیف', 'رعد و برق', 'برفی', 'نیمه‌ابری', 'باران و آفتاب'];
+        const days = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'];
+
+        function showLoading() {
+            document.getElementById('loadingDiv').style.display = 'block';
+            document.getElementById('weatherDisplay').style.display = 'none';
+            document.getElementById('forecastSection').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingDiv').style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function updateWeatherDisplay(cityName, data) {
+            document.getElementById('cityName').textContent = cityName;
+            document.getElementById('currentTemp').textContent = `${data.temp}°C`;
+            document.getElementById('weatherDesc').textContent = data.desc;
+            document.getElementById('weatherIcon').textContent = data.icon;
+            document.getElementById('feelsLike').textContent = `${data.feelsLike}°C`;
+            document.getElementById('humidity').textContent = `${data.humidity}%`;
+            document.getElementById('windSpeed').textContent = `${data.windSpeed} کیلومتر بر ساعت`;
+            document.getElementById('visibility').textContent = `${data.visibility} کیلومتر`;
+            document.getElementById('pressure').textContent = `${data.pressure} hPa`;
+            document.getElementById('sunrise').textContent = data.sunrise;
+            document.getElementById('sunset').textContent = data.sunset;
+
+            document.getElementById('weatherDisplay').style.display = 'grid';
+        }
+
+        function generateForecast() {
+            const forecastGrid = document.getElementById('forecastGrid');
+            forecastGrid.innerHTML = '';
+
+            for (let i = 0; i < 5; i++) {
+                const dayIndex = (new Date().getDay() + i) % 7;
+                const temp = Math.floor(Math.random() * 30) + 10;
+                const icon = weatherIcons[Math.floor(Math.random() * weatherIcons.length)];
+                const desc = weatherDescs[Math.floor(Math.random() * weatherDescs.length)];
+
+                const forecastCard = document.createElement('div');
+                forecastCard.className = 'forecast-card';
+                forecastCard.innerHTML = `
+                    <div class="forecast-day">${days[dayIndex]}</div>
+                    <div class="forecast-icon">${icon}</div>
+                    <div class="forecast-temp">${temp}°C</div>
+                    <div class="forecast-desc">${desc}</div>
+                `;
+                forecastGrid.appendChild(forecastCard);
+            }
+
+            document.getElementById('forecastSection').style.display = 'block';
+        }
+
+        function searchWeather() {
+            const cityInput = document.getElementById('cityInput');
+            const cityName = cityInput.value.trim();
+
+            if (!cityName) {
+                showError('لطفاً نام شهر را وارد کنید');
+                return;
+            }
+
+            showLoading();
+
+            // Simulate API call delay
+            setTimeout(() => {
+                hideLoading();
+
+                if (weatherData[cityName]) {
+                    updateWeatherDisplay(cityName, weatherData[cityName]);
+                    generateForecast();
+                    cityInput.value = '';
+                } else {
+                    // Generate random data for demo
+                    const randomData = {
+                        temp: Math.floor(Math.random() * 35) + 5,
+                        desc: weatherDescs[Math.floor(Math.random() * weatherDescs.length)],
+                        icon: weatherIcons[Math.floor(Math.random() * weatherIcons.length)],
+                        feelsLike: Math.floor(Math.random() * 35) + 5,
+                        humidity: Math.floor(Math.random() * 40) + 40,
+                        windSpeed: Math.floor(Math.random() * 30) + 5,
+                        visibility: Math.floor(Math.random() * 10) + 3,
+                        pressure: Math.floor(Math.random() * 50) + 1000,
+                        sunrise: '06:30',
+                        sunset: '18:45'
+                    };
+
+                    updateWeatherDisplay(cityName, randomData);
+                    generateForecast();
+                    cityInput.value = '';
+                }
+            }, 1500);
+        }
+
+        function quickSearch(cityName) {
+            document.getElementById('cityInput').value = cityName;
+            searchWeather();
+        }
+
+        // Add enter key support
+        document.getElementById('cityInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchWeather();
+            }
+        });
+
+        // Load default city on page load
+        window.addEventListener('load', function() {
+            quickSearch('تهران');
+        });
+    </script>
+</body>
+</html>
