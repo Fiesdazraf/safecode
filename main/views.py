@@ -45,3 +45,7 @@ def test_email(request):
         return HttpResponse('Invalid header found.')
     except Exception as e:
         return HttpResponse(f'Error occurred: {e}')
+
+
+def todo_view(request):
+    return render(request, 'todo-app/index.html')
