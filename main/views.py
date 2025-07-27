@@ -7,8 +7,15 @@ from .models import PortfolioItem
 
 # Create your views here.
 
+# views.py
+
 def home(request):
-    return render(request, 'main/home.html')
+    all_items = PortfolioItem.objects.all().order_by('-created_at')
+    todo_item = PortfolioItem.objects.filter(title__icontains='todo').first()
+    return render(request, 'main/home.html', {
+        'items': all_items,
+        'todo_item': todo_item,
+    })
 
 def portfolio(request):
     items = PortfolioItem.objects.order_by('-created_at')  # جدیدترین‌ها اول
