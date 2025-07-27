@@ -1,40 +1,30 @@
-{% extends "main/base.html" %}
+{% extends 'main/base.html' %}
+{% load static %}
 
 {% block title %}نمونه‌کارها{% endblock %}
 
 {% block content %}
-<div class="content-area">
-    <h1 style="text-align: center;">نمونه‌کارهای من</h1>
-
-    {% if items %}
-        <div class="portfolio-grid">
-            {% for item in items %}
-                <div class="portfolio-card">
-                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
-                    <h3>{{ item.title }}</h3>
-                    <p>{{ item.description|linebreaksbr }}</p>
-                    {% if item.project_url %}
-                        <a href="{{ item.project_url }}" target="_blank" rel="noopener">مشاهده پروژه</a>
-                    {% endif %}
-                </div>
-            {% endfor %}
+<section class="container py-5">
+  <h2 class="text-center fw-bold mb-5">نمونه‌کارهای من</h2>
+  <div class="row g-4">
+    {% for item in items %}
+    <div class="col-12 col-sm-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0 portfolio-card">
+        <div class="img-wrapper">
+          <img src="{{ item.image.url }}" class="card-img-top rounded" alt="{{ item.title }}">
         </div>
-    {% else %}
-        <div class="empty-portfolio">
-            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="No Projects Yet">
-            <h2>هنوز نمونه‌کاری ثبت نشده است</h2>
-            <p>به زودی پروژه‌های حرفه‌ای و خلاقانه در این بخش قرار خواهد گرفت!</p>
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title fw-bold">{{ item.title }}</h5>
+          <p class="card-text text-muted small">{{ item.description|truncatechars:100 }}</p>
+          {% if item.project_url %}
+          <a href="{{ item.project_url }}" class="btn btn-sm btn-outline-primary mt-auto" target="_blank">مشاهده پروژه</a>
+          {% endif %}
         </div>
-
-        <div id="todo" class="portfolio-item card mb-4">
-            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}">
-            <div class="card-body">
-                <h5 class="card-title">{{ item.title }}</h5>
-                <p class="card-text">{{ item.description }}</p>
-                <a href="{{ item.project_url }}" target="_blank" class="btn btn-sm btn-primary">مشاهده</a>
-            </div>
-        </div>
-
-    {% endif %}
-</div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="text-center text-muted">هیچ نمونه‌کاری ثبت نشده است.</div>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}
