@@ -25,6 +25,16 @@
             <h2>هنوز نمونه‌کاری ثبت نشده است</h2>
             <p>به زودی پروژه‌های حرفه‌ای و خلاقانه در این بخش قرار خواهد گرفت!</p>
         </div>
+
+        <div id="todo" class="portfolio-item card mb-4">
+            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text">{{ item.description }}</p>
+                <a href="{{ item.project_url }}" target="_blank" class="btn btn-sm btn-primary">مشاهده</a>
+            </div>
+        </div>
+
     {% endif %}
 </div>
 {% endblock %}
