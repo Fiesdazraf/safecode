@@ -49,32 +49,6 @@
     </div>
 </section>
 
-<!-- Featured Portfolio Section -->
-<section class="container py-4">
-    <h3 class="text-center mb-4">نمونه‌کارهای منتخب</h3>
-    <div class="row justify-content-center">
-        {% for item in items|slice:':3' %}
-        <div class="col-12 col-md-4 mb-3">
-            <div class="card h-100 border-0 shadow-sm portfolio-card">
-                <img src="{{ item.image.url }}" class="card-img-top img-fluid" alt="{{ item.title }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.title }}</h5>
-                    <p class="card-text">{{ item.description|truncatechars:60 }}</p>
-                    {% if item.project_url %}
-                    <a href="{{ item.project_url }}" class="btn btn-outline-primary btn-sm" target="_blank">مشاهده پروژه</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <div class="col-12 text-center text-muted">هنوز نمونه‌کاری ثبت نشده است.</div>
-        {% endfor %}
-    </div>
-    <div class="text-center mt-3">
-        <a href="{% url 'portfolio' %}" class="btn btn-link">مشاهده همه نمونه‌کارها</a>
-    </div>
-</section>
-
 <!-- Quick Contact/Social Section -->
 <section class="container py-4">
     <div class="row justify-content-center">
