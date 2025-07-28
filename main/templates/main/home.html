@@ -9,10 +9,6 @@
     <h1 class="fw-bold mt-3">فرزاد سیف</h1>
     <h4 class="text-primary mb-3">برنامه‌نویس و طراح وب</h4>
     <p class="lead mb-4">من به کسب‌وکارها کمک می‌کنم آنلاین رشد کنند و بهترین تجربه دیجیتال را برای مشتریانشان بسازند.</p>
-    <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a href="{% url 'portfolio' %}" class="btn btn-primary px-4">نمونه‌کارها</a>
-        <a href="{% url 'contact' %}" class="btn btn-primary px-4">تماس با من</a>
-    </div>
 </section>
 
 <!-- Skills/Services Section -->
@@ -47,17 +43,36 @@
             </div>
         </div>
     </div>
-</section>
-
-<!-- Quick Contact/Social Section -->
-<section class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 text-center">
-            <h4 class="mb-3">در ارتباط باشیم!</h4>
-            <a href="https://instagram.com/_farzadseif" class="social-btn instagram" target="_blank"><i class="bi bi-instagram"></i></a>
-            <a href="https://t.me/LeoRave" class="social-btn telegram" target="_blank"><i class="bi bi-telegram"></i></a>
-            <a href="https://github.com/fiesdazraf" class="social-btn github" target="_blank"><i class="bi bi-github"></i></a>
+    <div class="row justify-content-center mt-4">
+    <div class="col-12 col-md-4 mb-3">
+        <div class="card h-100 text-center border-0 shadow-sm">
+            <div class="card-body">
+                <i class="bi bi-laptop display-5 text-primary mb-3"></i>
+                <h5 class="card-title">طراحی رابط کاربری</h5>
+                <p class="card-text">طراحی UI/UX مدرن و کاربرپسند برای وب‌سایت و اپلیکیشن‌ها با تمرکز بر تجربه کاربری.</p>
+            </div>
         </div>
     </div>
+    <div class="col-12 col-md-4 mb-3">
+        <div class="card h-100 text-center border-0 shadow-sm">
+            <div class="card-body">
+                <i class="bi bi-phone display-5 text-primary mb-3"></i>
+                <h5 class="card-title">واکنش‌گرایی کامل</h5>
+                <p class="card-text">ساخت صفحات وب کاملاً ریسپانسیو برای نمایش بی‌نقص در همه دستگاه‌ها.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4 mb-3">
+        <div class="card h-100 text-center border-0 shadow-sm">
+            <div class="card-body">
+                <i class="bi bi-server display-5 text-primary mb-3"></i>
+                <h5 class="card-title">پشتیبانی و نگهداری</h5>
+                <p class="card-text">نگهداری و به‌روزرسانی پروژه‌ها بعد از تحویل برای اطمینان از عملکرد مداوم.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 </section>
+
 {% endblock %}
