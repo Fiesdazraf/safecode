@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ item.title }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+  <h1 class="text-center mb-4">{{ item.title }}</h1>
+  <img src="{{ item.image.url }}" class="img-fluid mb-4 rounded" alt="{{ item.title }}">
+  <p class="text-muted">{{ item.description }}</p>
+  {% if item.project_url %}
+    <div class="text-center mt-4">
+      <a href="{{ item.project_url }}" target="_blank" class="btn btn-outline-primary">مشاهده پروژه</a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

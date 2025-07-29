@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
 
 class Contact(models.Model):
     name = models.CharField(max_length=100)
@@ -16,9 +18,17 @@ class PortfolioItem(models.Model):
     image = models.ImageField(upload_to='portfolio_images/', verbose_name='عکس نمونه‌کار')
     project_url = models.URLField(blank=True, null=True, verbose_name='لینک پروژه')
     image = models.ImageField(upload_to='portfolio_images/', verbose_name='عکس نمونه‌کار')
+    slug = models.SlugField(unique=True, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')
 
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('portfolio_detail', args=[self.slug])
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)

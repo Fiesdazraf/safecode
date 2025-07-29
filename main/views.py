@@ -56,3 +56,7 @@ def test_email(request):
 
 def todo_view(request):
     return render(request, 'todo-app/index.html')
+
+def portfolio_detail(request, slug):
+    item = get_object_or_404(PortfolioItem, slug=slug)
+    return render(request, 'main/portfolio_detail.html', {'item': item})
