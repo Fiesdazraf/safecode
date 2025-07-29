@@ -1,6 +1,11 @@
 {% extends 'main/base.html' %}
 {% block title %}Contact{% endblock %}
 {% block content %}
+<h1 class="text-center fw-bold mb-4">تماس با طراح سایت</h1>
+<p class="text-center text-muted mb-4">
+برای مشاوره، درخواست پروژه یا سفارش <strong>طراحی وب‌سایت</strong>، لطفاً از طریق فرم زیر با من تماس بگیرید.
+</p>
+
 <div class="contact-form">
   {% if success %}
     <div id="success-alert" class="alert alert-success animate__animated animate__fadeInDown" role="alert">
@@ -22,7 +27,7 @@
       {{ form.message.label_tag }}
       {{ form.message }}
     </div>
-    <button type="submit" class="btn btn-primary w-100">ارسال پیام</button>
+    <button type="submit" class="btn btn-primary w-100">ارسال درخواست طراحی سایت</button>
   </form>
 </div>
 <script>
@@ -67,6 +72,7 @@ if (successAlert) {
 <!-- Quick Contact/Social Section -->
 <section class="container py-4">
     <div class="row justify-content-center">
+      <h2 class="text-center mt-5 mb-3">شبکه‌های اجتماعی</h2>
         <div class="col-12 col-md-8 text-center">
             <a href="https://instagram.com/_farzadseif" class="social-btn instagram" target="_blank"><i class="bi bi-instagram"></i></a>
             <a href="https://t.me/LeoRave" class="social-btn telegram" target="_blank"><i class="bi bi-telegram"></i></a>

@@ -1,78 +1,89 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}خانه{% endblock %}
+{% block title %}فرزاد سیف | برنامه‌نویس، طراح وب و توسعه‌دهنده Django{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
 <section class="hero-section text-center py-5">
     <h1 class="fw-bold mt-3">فرزاد سیف</h1>
-    <h4 class="text-primary mb-3">برنامه‌نویس و طراح وب</h4>
-    <p class="lead mb-4">من به کسب‌وکارها کمک می‌کنم آنلاین رشد کنند و بهترین تجربه دیجیتال را برای مشتریانشان بسازند.</p>
+    <h2 class="text-primary mb-3">برنامه‌نویس و متخصص طراحی سایت با Django</h2>
+    <p class="lead mb-4">
+    با بیش از چند سال تجربه در <strong>توسعه وب</strong> و <strong>طراحی وب‌سایت‌های مدرن</strong>، به کسب‌وکارها کمک می‌کنم تا با <strong>ساخت سایت حرفه‌ای</strong> دیده شوند و در نتایج گوگل بدرخشند.
+    </p>
+    <a href="{% url 'portfolio' %}" class="btn btn-primary px-4">مشاهده نمونه‌کارها</a>
+    <a href="{% url 'contact' %}" class="btn btn-primary px-4">تماس با برنامه‌نویس</a>
+
 </section>
 
 <!-- Skills/Services Section -->
 <section class="container py-4">
-    <h3 class="text-center mb-4">مهارت‌ها و خدمات</h3>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-4 mb-3">
-            <div class="card h-100 text-center border-0 shadow-sm">
-                <div class="card-body">
-                    <i class="bi bi-code-slash display-5 text-primary mb-3"></i>
-                    <h5 class="card-title">توسعه وب</h5>
-                    <p class="card-text">طراحی و پیاده‌سازی سایت‌های مدرن و ریسپانسیو با جدیدترین تکنولوژی‌ها.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4 mb-3">
-            <div class="card h-100 text-center border-0 shadow-sm">
-                <div class="card-body">
-                    <i class="bi bi-bar-chart-line display-5 text-primary mb-3"></i>
-                    <h5 class="card-title">سئو و بهینه‌سازی</h5>
-                    <p class="card-text">افزایش بازدید و رتبه سایت شما در گوگل با روش‌های حرفه‌ای سئو.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4 mb-3">
-            <div class="card h-100 text-center border-0 shadow-sm">
-                <div class="card-body">
-                    <i class="bi bi-people display-5 text-primary mb-3"></i>
-                    <h5 class="card-title">مشاوره و آموزش</h5>
-                    <p class="card-text">مشاوره تخصصی و آموزش برنامه‌نویسی و راه‌اندازی کسب‌وکار آنلاین.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-center mt-4">
+  <h2 class="text-center mb-4">مهارت‌ها و خدمات طراحی سایت</h2>
+  <div class="row justify-content-center">
+    <!-- توسعه وب -->
     <div class="col-12 col-md-4 mb-3">
-        <div class="card h-100 text-center border-0 shadow-sm">
-            <div class="card-body">
-                <i class="bi bi-laptop display-5 text-primary mb-3"></i>
-                <h5 class="card-title">طراحی رابط کاربری</h5>
-                <p class="card-text">طراحی UI/UX مدرن و کاربرپسند برای وب‌سایت و اپلیکیشن‌ها با تمرکز بر تجربه کاربری.</p>
-            </div>
+      <div class="card h-100 text-center border-0 shadow-sm">
+        <div class="card-body">
+          <i class="bi bi-code-slash display-5 text-primary mb-3"></i>
+          <h3 class="card-title">توسعه وب با Django</h3>
+          <p class="card-text">پیاده‌سازی سایت‌های سریع، امن و قابل توسعه با Django برای نیازهای حرفه‌ای.</p>
         </div>
+      </div>
     </div>
+    <!-- سئو -->
     <div class="col-12 col-md-4 mb-3">
-        <div class="card h-100 text-center border-0 shadow-sm">
-            <div class="card-body">
-                <i class="bi bi-phone display-5 text-primary mb-3"></i>
-                <h5 class="card-title">واکنش‌گرایی کامل</h5>
-                <p class="card-text">ساخت صفحات وب کاملاً ریسپانسیو برای نمایش بی‌نقص در همه دستگاه‌ها.</p>
-            </div>
+      <div class="card h-100 text-center border-0 shadow-sm">
+        <div class="card-body">
+          <i class="bi bi-bar-chart-line display-5 text-primary mb-3"></i>
+          <h3 class="card-title">سئو و بهینه‌سازی سایت</h3>
+          <p class="card-text">افزایش بازدید و ارتقای رتبه سایت شما در گوگل با روش‌های اصولی و حرفه‌ای سئو.</p>
         </div>
+      </div>
     </div>
+    <!-- مشاوره -->
     <div class="col-12 col-md-4 mb-3">
-        <div class="card h-100 text-center border-0 shadow-sm">
-            <div class="card-body">
-                <i class="bi bi-server display-5 text-primary mb-3"></i>
-                <h5 class="card-title">پشتیبانی و نگهداری</h5>
-                <p class="card-text">نگهداری و به‌روزرسانی پروژه‌ها بعد از تحویل برای اطمینان از عملکرد مداوم.</p>
-            </div>
+      <div class="card h-100 text-center border-0 shadow-sm">
+        <div class="card-body">
+          <i class="bi bi-people display-5 text-primary mb-3"></i>
+          <h3 class="card-title">مشاوره طراحی سایت</h3>
+          <p class="card-text">راهنمایی در انتخاب مسیر مناسب برای راه‌اندازی یا ارتقای وب‌سایت‌های شخصی و شرکتی.</p>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
+  <div class="row justify-content-center mt-4">
+    <!-- رابط کاربری -->
+    <div class="col-12 col-md-4 mb-3">
+      <div class="card h-100 text-center border-0 shadow-sm">
+        <div class="card-body">
+          <i class="bi bi-laptop display-5 text-primary mb-3"></i>
+          <h3 class="card-title">طراحی رابط کاربری (UI/UX)</h3>
+          <p class="card-text">طراحی ظاهری حرفه‌ای و کاربرپسند برای وب‌سایت‌ها با تمرکز بر تجربه کاربری.</p>
+        </div>
+      </div>
+    </div>
+    <!-- واکنش‌گرایی -->
+    <div class="col-12 col-md-4 mb-3">
+      <div class="card h-100 text-center border-0 shadow-sm">
+        <div class="card-body">
+          <i class="bi bi-phone display-5 text-primary mb-3"></i>
+          <h3 class="card-title">ساخت وب‌سایت ریسپانسیو</h3>
+          <p class="card-text">نمایش بی‌نقص وب‌سایت در موبایل، تبلت و دسکتاپ با طراحی کاملاً واکنش‌گرا.</p>
+        </div>
+      </div>
+    </div>
+    <!-- پشتیبانی -->
+    <div class="col-12 col-md-4 mb-3">
+      <div class="card h-100 text-center border-0 shadow-sm">
+        <div class="card-body">
+          <i class="bi bi-server display-5 text-primary mb-3"></i>
+          <h3 class="card-title">پشتیبانی و نگهداری سایت</h3>
+          <p class="card-text">مانیتورینگ، به‌روزرسانی و پشتیبانی فنی مداوم برای حفظ عملکرد بهینه سایت شما.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 {% endblock %}
