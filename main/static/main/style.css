@@ -1,352 +1,55 @@
-/* پالت رنگ مدرن و مینیمال */
-:root {
-    --primary: #6C63FF;      /* بنفش مدرن */
-    --accent: #00C9A7;       /* سبز نعنایی */
-    --background: #F8F9FB;   /* سفید ملایم */
-    --surface: #FFFFFF;      /* سفید */
-    --text: #232946;         /* خاکستری تیره */
-    --muted: #B8C1EC;        /* خاکستری روشن */
-    --shadow: 0 4px 24px rgba(108, 99, 255, 0.08);
+/* فونت‌ها */
+@font-face {
+  font-family: 'Vazir';
+  src: url('/static/fonts/Vazir.woff2') format('woff2');
+  font-display: swap;
 }
 
-body {
-    background: var(--background);
-    color: var(--text);
-    font-family: 'Vazir', sans-serif;
-    direction: rtl;
-    text-align: right;
-    min-height: 100vh;
+/* آیکون‌های واکنش‌گرا */
+.bi {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
 }
 
-.navbar {
-    background: var(--surface) !important;
-    box-shadow: var(--shadow);
-    border-radius: 0 0 1.5rem 1.5rem;
-    padding: 0.7rem 0;
-}
-
-.navbar-center-adjust {
-    top: 20% !important;  /* یا مثلاً 35%، خودت تست کن ببین کدوم قشنگ‌تره */
-}
-
-
-.navbar-brand {
-    color: var(--primary) !important;
-    font-size: 1.7rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.navbar-nav {
-    margin: 0 auto !important;
-    float: none !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.nav-link {
-    color: var(--text) !important;
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin: 0 1rem;
-    position: relative;
-    transition: color 0.2s;
-}
-
-
-.nav-link::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    transition: width 0.3s;
-    margin-top: 2px;
-}
-
-.nav-link:hover {
-    color: var(--primary) !important;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.btn-primary {
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    border: none;
-    color: #fff;
-    font-weight: 600;
-    border-radius: 2rem;
-    box-shadow: 0 2px 8px rgba(0,201,167,0.08);
-    transition: background 0.3s, box-shadow 0.3s;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(90deg, var(--accent), var(--primary));
-    box-shadow: 0 4px 16px rgba(108,99,255,0.15);
-}
-
-.card {
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow);
-    border: none;
-    background: var(--surface);
-    transition: transform 0.2s, box-shadow 0.2s;
-    overflow: hidden;
-    margin-bottom: 2rem;
-    animation: fadeInUp 0.7s cubic-bezier(.39,.575,.565,1) both;
-}
-
-.card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 8px 32px rgba(0,201,167,0.13);
-}
-
+/* فونت مقیاس‌پذیر برای تیتر کارت‌ها */
 .card-title {
-    color: var(--primary);
-    font-weight: bold;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: bold;
+  color: var(--primary);
 }
 
-footer, .site-footer {
-    background: var(--primary);
-    color: #fff;
-    text-align: center;
-    padding: 1.2rem 0 0.7rem 0;
-    border-radius: 1.5rem 1.5rem 0 0;
-    font-size: 1rem;
-    margin-top: 2rem;
-    box-shadow: 0 -2px 12px rgba(108,99,255,0.08);
+/* بهینه‌سازی سایز پاراگراف‌ها در کارت */
+.card-text {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--text);
 }
 
-/* انیمیشن‌های مدرن */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* responsive padding for section */
+.hero-section,
+.container {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-@keyframes pop {
-    0% {
-        transform: scale(0.95);
-    }
-    60% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.btn-primary, .card, .navbar, .footer {
-    animation: pop 0.7s cubic-bezier(.39,.575,.565,1) both;
-}
-
-/* فرم تماس */
-.contact-form {
-    background: var(--surface);
-    border-radius: 1.2rem;
-    box-shadow: var(--shadow);
-    padding: 2rem 1.5rem;
-    max-width: 500px;
-    margin: 2rem auto;
-    animation: fadeInUp 0.8s cubic-bezier(.39,.575,.565,1) both;
-}
-
-.contact-form input,
-.contact-form textarea {
-    border-radius: 1rem;
-    border: 1px solid var(--muted);
-    padding: 0.8rem 1rem;
-    margin-bottom: 1.2rem;
-    background: #f4f6fb;
-    transition: border 0.2s, box-shadow 0.2s;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 8px rgba(108,99,255,0.13);
-    outline: none;
-}
-
-.contact-form button {
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    color: #fff;
-    border: none;
-    border-radius: 2rem;
-    padding: 0.7rem 2.2rem;
-    font-weight: 600;
-    transition: background 0.3s, box-shadow 0.3s;
-    box-shadow: 0 2px 8px rgba(0,201,167,0.08);
-}
-
-.contact-form button:hover {
-    background: linear-gradient(90deg, var(--accent), var(--primary));
-    box-shadow: 0 4px 16px rgba(108,99,255,0.15);
-}
-
-.contact-form input[type="email"] {
-    direction: rtl;
-    text-align: right;
-}
-
-.contact-form input[type="text"] {
-    direction: rtl;
-    text-align: right;
-}
-
-.is-invalid {
-    border-color: #dc3545 !important;
-    background: #fff0f3 !important;
-    animation: shakeX 0.5s;
-}
-
-@keyframes shakeX {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
-    20%, 40%, 60%, 80% { transform: translateX(10px); }
-}
-
-/* ریسپانسیو */
 @media (max-width: 600px) {
-    .navbar {
-        border-radius: 0 0 1rem 1rem;
-    }
-    .card {
-        border-radius: 1rem;
-    }
-    .contact-form {
-        padding: 1.2rem 0.7rem;
-    }
-    .social-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1.3rem;
-        margin: 0 4px;
-    }
-    .hero-section h1 {
-        font-size: 1.5rem;
-    }
-    .hero-section h4 {
-        font-size: 1.1rem;
-    }
-    .hero-section .lead {
-        font-size: 1rem;
-    }
-    .card-title {
-        font-size: 1.1rem;
-    }
-    .card-text {
-        font-size: 0.95rem;
-    }
-}
-
-
-.empty-portfolio {
-    text-align: center;
-    padding: 50px 20px;
-    color: #666;
-    animation: fadeIn 0.8s ease forwards;
-}
-
-.empty-portfolio img {
-    width: 120px;
-    margin-bottom: 20px;
-    opacity: 0.7;
-    transition: transform 0.3s ease;
-}
-
-.empty-portfolio img:hover {
-    transform: scale(1.1);
-    opacity: 1;
-}
-
-.empty-portfolio h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: #444;
-}
-
-.empty-portfolio p {
+  .hero-section h1 {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+  }
+  .hero-section h2 {
+    font-size: clamp(1rem, 4.5vw, 1.4rem);
+  }
+  .hero-section .lead {
     font-size: 1rem;
-    color: #777;
+  }
+  .btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.4rem;
+  }
 }
 
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
-}
-
-.portfolio-card {
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.portfolio-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-
-.img-wrapper {
-  max-height: 200px;
-  overflow: hidden;
-}
-
-.img-wrapper img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-
-
-/* بلاگ - لیست مطالب */
-.social-btn {
-    width: 56px;
-    height: 56px;
-    font-size: 2rem;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 10px;
-    transition: transform 0.2s cubic-bezier(.39,.575,.565,1), box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    border: none;
-    padding: 0;
-}
-.social-btn.instagram {
-    background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-    color: #fff;
-}
-.social-btn.instagram i {
-    color: #fff;
-}
-.social-btn.telegram {
-    background: #229ED9;
-    color: #fff;
-}
-.social-btn.telegram i {
-    color: #fff;
-}
-.social-btn.github {
-    background: #23272d;
-    color: #fff;
-}
-.social-btn.github i {
-    color: #fff;
-}
-.social-btn:hover {
-    transform: scale(1.18);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.13);
-    z-index: 2;
+/* بهینه‌سازی لود فونت و آیکون برای LCP بهتر */
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }

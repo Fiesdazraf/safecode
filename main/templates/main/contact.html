@@ -1,41 +1,44 @@
 {% extends 'main/base.html' %}
-{% block title %}Contact{% endblock %}
-{% block content %}
-<h1 class="text-center fw-bold mb-4">تماس با طراح سایت</h1>
-<p class="text-center text-muted mb-4">
-برای مشاوره، درخواست پروژه یا سفارش <strong>طراحی وب‌سایت</strong>، لطفاً از طریق فرم زیر با من تماس بگیرید.
-</p>
+{% block title %}تماس با فرزاد سیف | برنامه‌نویس و طراح سایت{% endblock %}
+{% block meta_description %}
+فرم تماس با فرزاد سیف برای مشاوره، سفارش طراحی سایت، خدمات توسعه وب و سئو. از طریق این فرم یا شبکه‌های اجتماعی در ارتباط باشید.
+{% endblock %}
 
-<div class="contact-form">
-  {% if success %}
-    <div id="success-alert" class="alert alert-success animate__animated animate__fadeInDown" role="alert">
-      پیام شما با موفقیت ارسال شد!
-    </div>
-  {% endif %}
-  <div id="form-alert" class="alert alert-danger d-none animate__animated animate__shakeX" role="alert"></div>
-  <form method="post" class="needs-validation" novalidate id="contactForm">
-    {% csrf_token %}
-    <div class="mb-3">
-      {{ form.name.label_tag }}
-      {{ form.name }}
-    </div>
-    <div class="mb-3">
-      {{ form.email.label_tag }}
-      {{ form.email }}
-    </div>
-    <div class="mb-3">
-      {{ form.message.label_tag }}
-      {{ form.message }}
-    </div>
-    <button type="submit" class="btn btn-primary w-100">ارسال درخواست طراحی سایت</button>
-  </form>
-</div>
+{% block content %}
+<section class="container py-4">
+  <h1 class="text-center fw-bold mb-3" style="font-size: clamp(1.6rem, 5vw, 2.2rem);">تماس با طراح سایت</h1>
+  <p class="text-center text-muted mb-4" style="font-size: clamp(1rem, 3.5vw, 1.1rem);">
+    برای مشاوره، درخواست پروژه یا سفارش <strong>طراحی وب‌سایت</strong>، لطفاً از طریق فرم زیر با من تماس بگیرید.
+  </p>
+
+  <div class="contact-form">
+    {% if success %}
+      <div id="success-alert" class="alert alert-success animate__animated animate__fadeInDown" role="alert">
+        پیام شما با موفقیت ارسال شد!
+      </div>
+    {% endif %}
+    <div id="form-alert" class="alert alert-danger d-none animate__animated animate__shakeX" role="alert"></div>
+    <form method="post" class="needs-validation" novalidate id="contactForm">
+      {% csrf_token %}
+      <div class="mb-3">{{ form.name.label_tag }}{{ form.name }}</div>
+      <div class="mb-3">{{ form.email.label_tag }}{{ form.email }}</div>
+      <div class="mb-3">{{ form.message.label_tag }}{{ form.message }}</div>
+      <button type="submit" class="btn btn-primary w-100">ارسال درخواست طراحی سایت</button>
+    </form>
+  </div>
+
+  <h2 class="text-center mt-5 mb-3" style="font-size: clamp(1.3rem, 4vw, 1.8rem);">شبکه‌های اجتماعی</h2>
+  <div class="text-center">
+    <a href="https://instagram.com/_farzadseif" class="social-btn instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+    <a href="https://t.me/LeoRave" class="social-btn telegram" target="_blank"><i class="bi bi-telegram"></i></a>
+    <a href="https://github.com/fiesdazraf" class="social-btn github" target="_blank"><i class="bi bi-github"></i></a>
+  </div>
+</section>
+
 <script>
-// اعتبارسنجی فرم تماس با انیمیشن و نمایش هشدار
 const form = document.getElementById('contactForm');
 const alertBox = document.getElementById('form-alert');
 const fields = form.querySelectorAll('input, textarea');
-
 form.addEventListener('submit', function(e) {
   let valid = true;
   let firstInvalid = null;
@@ -60,7 +63,6 @@ fields.forEach(field => {
     alertBox.classList.add('d-none');
   });
 });
-// پیام موفقیت بعد از چند ثانیه محو شود
 const successAlert = document.getElementById('success-alert');
 if (successAlert) {
   setTimeout(() => {
@@ -69,16 +71,4 @@ if (successAlert) {
   }, 3500);
 }
 </script>
-<!-- Quick Contact/Social Section -->
-<section class="container py-4">
-    <div class="row justify-content-center">
-      <h2 class="text-center mt-5 mb-3">شبکه‌های اجتماعی</h2>
-        <div class="col-12 col-md-8 text-center">
-            <a href="https://instagram.com/_farzadseif" class="social-btn instagram" target="_blank"><i class="bi bi-instagram"></i></a>
-            <a href="https://t.me/LeoRave" class="social-btn telegram" target="_blank"><i class="bi bi-telegram"></i></a>
-            <a href="https://github.com/fiesdazraf" class="social-btn github" target="_blank"><i class="bi bi-github"></i></a>
-        </div>
-    </div>
-</section>
-
 {% endblock %}

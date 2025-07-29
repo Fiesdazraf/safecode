@@ -7,88 +7,72 @@
 فرزاد سیف - طراح و برنامه‌نویس وب. خدمات طراحی سایت، توسعه وب با Django، نمونه‌کارها و راه‌های تماس را در سایت SafeCode ببینید.
 {% endblock %}
 
-
 {% block content %}
 <!-- Hero Section -->
 <section class="hero-section text-center py-5">
-    <h1 class="fw-bold mt-3">فرزاد سیف</h1>
-    <h2 class="text-primary mb-3">برنامه‌نویس و متخصص طراحی سایت با Django</h2>
-    <p class="lead mb-4">
-    با بیش از چند سال تجربه در <strong>توسعه وب</strong> و <strong>طراحی وب‌سایت‌های مدرن</strong>، به کسب‌وکارها کمک می‌کنم تا با <strong>ساخت سایت حرفه‌ای</strong> دیده شوند و در نتایج گوگل بدرخشند.
-    </p>
-    <a href="{% url 'portfolio' %}" class="btn btn-primary px-4">مشاهده نمونه‌کارها</a>
-    <a href="{% url 'contact' %}" class="btn btn-primary px-4">تماس با برنامه‌نویس</a>
-
+  <h1 class="fw-bold mt-3">فرزاد سیف</h1>
+  <h2 class="text-primary mb-3">برنامه‌نویس و متخصص طراحی سایت با Django</h2>
+  <p class="lead mb-4">
+    با چند سال تجربه در <strong>توسعه وب</strong> و <strong>طراحی وب‌سایت مدرن</strong>، به کسب‌وکارها کمک می‌کنم تا با <strong>ساخت سایت حرفه‌ای</strong> دیده شوند و در نتایج گوگل بدرخشند.
+  </p>
+  <a href="{% url 'portfolio' %}" class="btn btn-primary px-4">مشاهده نمونه‌کارها</a>
+  <a href="{% url 'contact' %}" class="btn btn-primary px-4">تماس با برنامه‌نویس</a>
 </section>
 
-<!-- Skills/Services Section -->
-<section class="container py-4">
+<!-- Services Section (Simplified) -->
+<section class="container py-3 py-md-4">
   <h2 class="text-center mb-4">مهارت‌ها و خدمات طراحی سایت</h2>
+
   <div class="row justify-content-center">
-    <!-- توسعه وب -->
     <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100 text-center border-0 shadow-sm">
-        <div class="card-body">
-          <i class="bi bi-code-slash display-5 text-primary mb-3"></i>
-          <h3 class="card-title">توسعه وب با Django</h3>
-          <p class="card-text">پیاده‌سازی سایت‌های سریع، امن و قابل توسعه با Django برای نیازهای حرفه‌ای.</p>
-        </div>
+      <div class="text-center p-3">
+        <i class="bi bi-code-slash text-primary mb-3" style="font-size: clamp(1.8rem, 5vw, 2.5rem);"></i>
+        <h3 class="card-title" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem);">توسعه وب با Django</h3>
+        <p class="card-text">پیاده‌سازی سایت‌های سریع، امن و قابل توسعه با Django برای نیازهای حرفه‌ای.</p>
       </div>
     </div>
-    <!-- سئو -->
+
     <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100 text-center border-0 shadow-sm">
-        <div class="card-body">
-          <i class="bi bi-bar-chart-line display-5 text-primary mb-3"></i>
-          <h3 class="card-title">سئو و بهینه‌سازی سایت</h3>
-          <p class="card-text">افزایش بازدید و ارتقای رتبه سایت شما در گوگل با روش‌های اصولی و حرفه‌ای سئو.</p>
-        </div>
+      <div class="text-center p-3">
+        <i class="bi bi-bar-chart-line text-primary mb-3" style="font-size: clamp(1.8rem, 5vw, 2.5rem);"></i>
+        <h3 class="card-title" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem);">سئو و بهینه‌سازی سایت</h3>
+        <p class="card-text">افزایش بازدید و ارتقای رتبه سایت شما در گوگل با روش‌های اصولی و حرفه‌ای سئو.</p>
       </div>
     </div>
-    <!-- مشاوره -->
+
     <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100 text-center border-0 shadow-sm">
-        <div class="card-body">
-          <i class="bi bi-people display-5 text-primary mb-3"></i>
-          <h3 class="card-title">مشاوره طراحی سایت</h3>
-          <p class="card-text">راهنمایی در انتخاب مسیر مناسب برای راه‌اندازی یا ارتقای وب‌سایت‌های شخصی و شرکتی.</p>
-        </div>
+      <div class="text-center p-3">
+        <i class="bi bi-people text-primary mb-3" style="font-size: clamp(1.8rem, 5vw, 2.5rem);"></i>
+        <h3 class="card-title" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem);">مشاوره طراحی سایت</h3>
+        <p class="card-text">راهنمایی تخصصی برای طراحی، راه‌اندازی یا ارتقای وب‌سایت‌های شخصی و تجاری.</p>
       </div>
     </div>
   </div>
 
   <div class="row justify-content-center mt-4">
-    <!-- رابط کاربری -->
     <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100 text-center border-0 shadow-sm">
-        <div class="card-body">
-          <i class="bi bi-laptop display-5 text-primary mb-3"></i>
-          <h3 class="card-title">طراحی رابط کاربری (UI/UX)</h3>
-          <p class="card-text">طراحی ظاهری حرفه‌ای و کاربرپسند برای وب‌سایت‌ها با تمرکز بر تجربه کاربری.</p>
-        </div>
+      <div class="text-center p-3">
+        <i class="bi bi-laptop text-primary mb-3" style="font-size: clamp(1.8rem, 5vw, 2.5rem);"></i>
+        <h3 class="card-title" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem);">طراحی رابط کاربری (UI/UX)</h3>
+        <p class="card-text">ایجاد تجربه‌ای کاربرپسند با طراحی زیبا، منظم و کاربردی در صفحات سایت شما.</p>
       </div>
     </div>
-    <!-- واکنش‌گرایی -->
+
     <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100 text-center border-0 shadow-sm">
-        <div class="card-body">
-          <i class="bi bi-phone display-5 text-primary mb-3"></i>
-          <h3 class="card-title">ساخت وب‌سایت ریسپانسیو</h3>
-          <p class="card-text">نمایش بی‌نقص وب‌سایت در موبایل، تبلت و دسکتاپ با طراحی کاملاً واکنش‌گرا.</p>
-        </div>
+      <div class="text-center p-3">
+        <i class="bi bi-phone text-primary mb-3" style="font-size: clamp(1.8rem, 5vw, 2.5rem);"></i>
+        <h3 class="card-title" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem);">ساخت وب‌سایت ریسپانسیو</h3>
+        <p class="card-text">طراحی وب‌سایت واکنش‌گرا برای نمایش عالی در موبایل، تبلت و دسکتاپ.</p>
       </div>
     </div>
-    <!-- پشتیبانی -->
+
     <div class="col-12 col-md-4 mb-3">
-      <div class="card h-100 text-center border-0 shadow-sm">
-        <div class="card-body">
-          <i class="bi bi-server display-5 text-primary mb-3"></i>
-          <h3 class="card-title">پشتیبانی و نگهداری سایت</h3>
-          <p class="card-text">مانیتورینگ، به‌روزرسانی و پشتیبانی فنی مداوم برای حفظ عملکرد بهینه سایت شما.</p>
-        </div>
+      <div class="text-center p-3">
+        <i class="bi bi-server text-primary mb-3" style="font-size: clamp(1.8rem, 5vw, 2.5rem);"></i>
+        <h3 class="card-title" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem);">پشتیبانی و نگهداری سایت</h3>
+        <p class="card-text">پشتیبانی فنی مداوم، مانیتورینگ و به‌روزرسانی جهت حفظ عملکرد و امنیت سایت شما.</p>
       </div>
     </div>
   </div>
 </section>
-
 {% endblock %}
