@@ -53,3 +53,8 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+
+
+.text-primary-custom {
+    color: #084298; /* Bootstrap 5 primary dark */
+}

@@ -1,11 +1,10 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}نمونه‌کارهای طراحی سایت با Django{% endblock %}
-
-{% block meta_description %}
-نمونه‌کارهای طراحی و توسعه وب با Django توسط فرزاد سیف. مشاهده پروژه‌های واقعی طراحی سایت با رابط کاربری حرفه‌ای و سئو مناسب.
-{% endblock %}
+{% block title %}نمونه‌کارهای طراحی سایت با Django | فرزاد سیف{% endblock %}
+{% block meta_description %}نمونه‌کارهای طراحی و توسعه وب با Django توسط فرزاد سیف. مشاهده پروژه‌های واقعی طراحی سایت با رابط کاربری حرفه‌ای و سئو مناسب.{% endblock %}
+{% block og_title %}نمونه‌کارهای SafeCode{% endblock %}
+{% block og_description %}مجموعه‌ای از پروژه‌های طراحی سایت و اپلیکیشن وب با Django توسط فرزاد سیف با طراحی مدرن و سئو محور.{% endblock %}
 
 {% block content %}
 <section class="container py-4 py-md-5">
@@ -13,24 +12,30 @@
 
   <div class="row g-4">
     {% for item in items %}
-    <div class="col-12 col-sm-6 col-lg-4">
-      <div class="portfolio-card shadow-sm h-100">
-        <div class="img-wrapper">
-          <img src="{{ item.image.url }}" class="card-img-top rounded" alt="{{ item.title }}" loading="lazy">
-        </div>
-        <div class="card-body d-flex flex-column p-3">
-          <h3 class="card-title mb-2" style="font-size: clamp(1rem, 2.5vw, 1.3rem);">{{ item.title }}</h3>
-          <p class="card-text text-muted small" style="font-size: clamp(0.9rem, 2vw, 1rem);">
-            {{ item.description|truncatechars:130 }}
-          </p>
-          {% if item.project_url %}
-          <a href="{{ item.project_url }}" class="btn btn-sm btn-outline-primary mt-auto">مشاهده پروژه</a>
-          {% endif %}
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="portfolio-card shadow-sm h-100 d-flex flex-column">
+          <div class="img-wrapper">
+            <img src="{{ item.image.url }}" class="card-img-top rounded-top" alt="{{ item.title }}" loading="lazy">
+          </div>
+          <div class="card-body d-flex flex-column p-3">
+            <h3 class="card-title mb-2" style="font-size: clamp(1rem, 2.5vw, 1.3rem);">
+              {{ item.title }}
+            </h3>
+            <p class="card-text text-muted small" style="font-size: clamp(0.9rem, 2vw, 1rem);">
+              {{ item.description|truncatechars:130 }}
+            </p>
+            {% if item.project_url %}
+              <a href="{{ item.project_url }}" class="btn btn-sm btn-outline-primary mt-auto" target="_blank" rel="noopener noreferrer">
+                مشاهده پروژه
+              </a>
+            {% endif %}
+          </div>
         </div>
       </div>
-    </div>
     {% empty %}
-    <div class="text-center text-muted">هیچ نمونه‌کاری ثبت نشده است.</div>
+      <div class="col-12 text-center text-muted">
+        هیچ نمونه‌کاری ثبت نشده است.
+      </div>
     {% endfor %}
   </div>
 </section>
