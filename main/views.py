@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .forms import ContactForm
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
-from .models import PortfolioItem
+from .models import PortfolioItem, Service
 
 # Create your views here.
 
@@ -19,7 +19,9 @@ def home(request):
 
 def portfolio(request):
     items = PortfolioItem.objects.order_by('-created_at')  # جدیدترین‌ها اول
-    return render(request, 'main/portfolio.html', {'items': items})
+    return render(request, 'main/portfolio.html', {
+        'items': items
+    })
 
 def contact(request):
     success = False
@@ -36,7 +38,10 @@ def contact(request):
             form = ContactForm()  # فرم خالی شود
     else:
         form = ContactForm()
-    return render(request, 'main/contact.html', {'form': form, 'success': success})
+    return render(request, 'main/contact.html', {
+        'form': form, 
+        'success': success
+    })
 
 def test_email(request):
     try:
@@ -59,4 +64,18 @@ def todo_view(request):
 
 def portfolio_detail(request, slug):
     item = get_object_or_404(PortfolioItem, slug=slug)
-    return render(request, 'main/portfolio_detail.html', {'item': item})
+    return render(request, 'main/portfolio_detail.html', {
+        'item': item
+    })
+
+
+def home_view(request):
+    services = Service.objects.all()
+    all_items = PortfolioItem.objects.all().order_by('-created_at')
+    todo_item = PortfolioItem.objects.filter(title__icontains='todo').first()
+
+    return render(request, 'main/home.html', {
+        'services': services,
+        'items': all_items,
+        'todo_item': todo_item,
+    })
