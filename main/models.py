@@ -32,3 +32,18 @@ class PortfolioItem(models.Model):
         if not self.slug:
             self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
+    
+    
+class Service(models.Model):
+    title = models.CharField(max_length=100, verbose_name='title')
+    description = models.TextField(verbose_name='description')
+    icon = models.CharField(max_length=50, verbose_name='bootstrap icon', help_text='like: bi-code-slash')
+    order = models.PositiveIntegerField(default=0, verbose_name='order by')
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'service/skill'
+        verbose_name_plural = 'services/skills'
+
+    def __str__(self):
+        return self.title
