@@ -30,17 +30,28 @@ def contact(request):
         if form.is_valid():
             contact = form.save()
 
-            subject = f"New message from {contact.name}"
-            message = f"Name: {contact.name}\nEmail: {contact.email}\n\nMessage:\n{contact.message}"
-            send_mail(subject, message, settings.EMAIL_HOST_USER, ['farzad.seif30@gmail.com'])
-
-            success = True
-            form = ContactForm()  # فرم خالی شود
+            subject = f"پیام جدید از {contact.name}"
+            message = f"نام: {contact.name}\nایمیل: {contact.email}\n\nپیام:\n{contact.message}"
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    settings.EMAIL_HOST_USER,
+                    ['farzad.seif30@gmail.com'],
+                    fail_silently=False,
+                )
+                success = True
+                form = ContactForm()
+            except Exception as e:
+                print("ارسال ایمیل با خطا مواجه شد:", e)
+                # می‌تونی یک پیام خطا هم به قالب بفرستی مثلاً:
+                # return render(request, 'main/contact.html', {'form': form, 'error': 'ارسال ایمیل با خطا مواجه شد.'})
     else:
         form = ContactForm()
+        
     return render(request, 'main/contact.html', {
-        'form': form, 
-        'success': success
+        'form': form,
+        'success': success,
     })
 
 def test_email(request):
