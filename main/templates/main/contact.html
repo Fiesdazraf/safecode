@@ -11,7 +11,7 @@
     برای مشاوره، درخواست پروژه یا سفارش <strong>طراحی وب‌سایت</strong>، لطفاً از طریق فرم زیر با من تماس بگیرید.
   </p>
 
-  <div class="contact-form">
+  <div class="contact-form mx-auto px-3" style="max-width: 520px;">
     {% if success %}
       <div id="success-alert" class="alert alert-success animate__animated animate__fadeInDown" role="alert">
         پیام شما با موفقیت ارسال شد!
@@ -39,9 +39,11 @@
 const form = document.getElementById('contactForm');
 const alertBox = document.getElementById('form-alert');
 const fields = form.querySelectorAll('input, textarea');
+
 form.addEventListener('submit', function(e) {
   let valid = true;
   let firstInvalid = null;
+
   fields.forEach(field => {
     if (!field.value.trim()) {
       valid = false;
@@ -49,20 +51,23 @@ form.addEventListener('submit', function(e) {
       if (!firstInvalid) firstInvalid = field;
     }
   });
+
   if (!valid) {
-    e.preventDefault();
+    e.preventDefault(); // ❗ فقط در صورت نامعتبر بودن ارسال نکن
     alertBox.textContent = 'لطفاً همه فیلدها را پر کنید.';
     alertBox.classList.remove('d-none');
     alertBox.classList.add('animate__shakeX');
     if (firstInvalid) firstInvalid.focus();
   }
 });
+
 fields.forEach(field => {
   field.addEventListener('focus', function() {
     field.classList.remove('is-invalid', 'animate__animated', 'animate__shakeX');
     alertBox.classList.add('d-none');
   });
 });
+
 const successAlert = document.getElementById('success-alert');
 if (successAlert) {
   setTimeout(() => {
