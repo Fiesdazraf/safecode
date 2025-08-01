@@ -17,7 +17,6 @@ class PortfolioItem(models.Model):
     description = models.TextField(verbose_name='توضیحات')
     image = models.ImageField(upload_to='portfolio_images/', verbose_name='عکس نمونه‌کار')
     project_url = models.URLField(blank=True, null=True, verbose_name='لینک پروژه')
-    image = models.ImageField(upload_to='portfolio_images/', verbose_name='عکس نمونه‌کار')
     slug = models.SlugField(unique=True, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')
