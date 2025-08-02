@@ -58,3 +58,8 @@ html {
 .text-primary-custom {
     color: #084298; /* Bootstrap 5 primary dark */
 }
+
+.rtl-input {
+  direction: rtl !important;
+  text-align: right !important;
+}
