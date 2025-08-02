@@ -40,14 +40,22 @@
   <!-- Header -->
   <header>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-  <div class="container d-flex align-items-center justify-content-between position-relative">
+  <div class="container position-relative">
 
-    <!-- لوگو -->
-    <a class="navbar-brand fw-bold" href="{% url 'home' %}">SafeCode</a>
+    <!-- لوگو در گوشه راست -->
+    <a class="navbar-brand fw-bold position-absolute start-0 top-50 translate-middle-y" href="{% url 'home' %}">
+      SafeCode
+    </a>
 
-    <!-- منو در وسط -->
-    <div class="collapse navbar-collapse position-absolute start-50 translate-middle-x" id="navbarNav">
-      <ul class="navbar-nav d-flex flex-row gap-3" role="menubar">
+    <!-- دکمه همبرگر -->
+    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="منو">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- منو -->
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav flex-column flex-lg-row gap-lg-3 text-center text-lg-start">
         <li class="nav-item">
           <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">خانه</a>
         </li>
@@ -59,6 +67,9 @@
         </li>
       </ul>
     </div>
+
+  </div>
+</nav>
 
     <!-- همبرگر موبایل -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
