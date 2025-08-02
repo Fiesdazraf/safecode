@@ -1,20 +1,18 @@
 /* فونت‌ها */
 @font-face {
-  font-family: 'Vazir';
-  src: url('/static/fonts/Vazir.woff2') format('woff2');
-  font-display: swap;
+  font-family: 'IranSans';
+  src: url('./fonts/IRANSansWeb(FaNum).woff') format('woff');
+  font-weight: normal;
 }
 
-/* آیکون‌های واکنش‌گرا */
-.bi {
-  font-size: clamp(1.5rem, 4vw, 2.2rem);
-}
-
-/* فونت مقیاس‌پذیر برای تیتر کارت‌ها */
-.card-title {
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+@font-face {
+  font-family: 'IranSans';
+  src: url('./fonts/IRANSansWeb(FaNum)_Bold.woff') format('woff');
   font-weight: bold;
-  color: var(--primary);
+}
+
+body, h1, h2, h3, h4, h5, h6, input, textarea, button {
+  font-family: 'IranSans', sans-serif !important;
 }
 
 /* بهینه‌سازی سایز پاراگراف‌ها در کارت */
