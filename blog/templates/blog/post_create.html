@@ -1,0 +1,13 @@
+{% extends "blog/base_blog.html" %}
+{% block title %}افزودن پست جدید{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="mb-4">✏️ افزودن پست جدید</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">ثبت پست</button>
+  </form>
+</div>
+{% endblock %}

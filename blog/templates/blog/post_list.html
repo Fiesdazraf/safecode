@@ -1,0 +1,87 @@
+{% extends "blog/base_blog.html" %}
+{% block title %}سیستم مدیریت محتوا | وبلاگ{% endblock %}
+
+{% block content %}
+
+<!-- معرفی پروژه -->
+<div class="container mb-5">
+  <div class="p-4 bg-white rounded shadow-sm border border-light">
+    <h2 class="fw-bold mb-3 text-primary">📝 سیستم مدیریت محتوای ساده (CMS)</h2>
+    <p class="text-muted fs-6">
+      این پروژه یک وبلاگ ساده است که با استفاده از <strong>Django</strong> طراحی شده تا امکان افزودن، ویرایش، حذف و نمایش پست‌های متنی را فراهم کند.
+      این سیستم با تمرکز بر سادگی، طراحی مینیمال و تجربه کاربری خوب ساخته شده تا توانایی من در توسعه سمت سرور (Backend) و رابط کاربری (Frontend) را نشان دهد.
+    </p>
+    <ul class="small text-secondary mt-3">
+      <li>✔️ افزودن پست از طریق فرم اختصاصی</li>
+      <li>✔️ پنل ادمین حرفه‌ای</li>
+      <li>✔️ طراحی جداگانه و مستقل از سایت اصلی</li>
+      <li>✔️ کاملاً ریسپانسیو و فارسی‌سازی شده</li>
+    </ul>
+    {% if user.is_authenticated %}
+      <div class="text-end mb-4">
+        <a href="{% url 'blog:post_create' %}" class="btn btn-outline-success">
+          ➕ افزودن پست جدید 
+        </a>
+      </div>
+    {% endif %}
+    <div class="mt-3">
+      <span class="badge bg-dark me-1">Django</span>
+      <span class="badge bg-dark me-1">SQLite</span>
+      <span class="badge bg-dark me-1">Bootstrap</span>
+      <span class="badge bg-dark me-1">HTML/CSS</span>
+    </div>
+  </div>
+</div>
+
+<!-- لیست پست‌ها -->
+<div class="container">
+  <h3 class="mb-4 text-center text-secondary">آخرین پست‌های وبلاگ</h3>
+  <div class="row">
+    {% for post in page_obj %}
+      <div class="col-12 col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ post.title }}</h5>
+            {% if post.category %}
+              <p class="mb-1"><span class="badge bg-primary">{{ post.category.name }}</span></p>
+            {% endif %}
+            <p class="card-text text-muted small">{{ post.created_at|date:"Y/m/d" }}</p>
+            <p class="card-text flex-grow-1">{{ post.content|truncatewords:25 }}</p>
+            <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-primary mt-3">مشاهده کامل</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center text-muted">هنوز پستی نوشته نشده است.</p>
+    {% endfor %}
+  </div>
+
+  <!-- صفحه‌بندی -->
+  {% if page_obj.has_other_pages %}
+    <div class="d-flex justify-content-center mt-4">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+            </li>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+              <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}">بعدی</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

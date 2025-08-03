@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "main",
+    "blog",
 ]
 
 MIDDLEWARE = [
@@ -147,3 +148,4 @@ EMAIL_HOST_USER = 'farzad.seif30@gmail.com'
 EMAIL_HOST_PASSWORD = 'zsimkqqnqzxtgfry'  
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+LOGIN_URL = '/accounts/login/'

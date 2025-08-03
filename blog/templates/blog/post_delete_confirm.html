@@ -1,0 +1,13 @@
+{% extends "blog/dashboard_base.html" %}
+{% block title %}حذف پست: {{ post.title }}{% endblock %}
+
+{% block content %}
+<h2 class="text-danger mb-4">❗ حذف پست</h2>
+<p>آیا مطمئن هستید که می‌خواهید پست <strong>«{{ post.title }}»</strong> را حذف کنید؟ این عملیات قابل بازگشت نیست.</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">بله، حذف شود</button>
+  <a href="{% url 'blog:dashboard' %}" class="btn btn-secondary">خیر، بازگشت</a>
+</form>
+{% endblock %}
