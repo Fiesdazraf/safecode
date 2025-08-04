@@ -1,13 +1,53 @@
 {% extends "blog/base_blog.html" %}
 {% block title %}افزودن پست جدید{% endblock %}
+{% load widget_tweaks %}
 
 {% block content %}
-<div class="container">
-  <h2 class="mb-4">✏️ افزودن پست جدید</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">ثبت پست</button>
-  </form>
+<div class="container py-5" dir="rtl">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h2 class="mb-4 text-center text-success">✏️ افزودن پست جدید</h2>
+
+          {% if form.errors %}
+            <div class="alert alert-danger">
+              {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                  <div>{{ error }}</div>
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {% if field.field.widget.input_type == "textarea" %}
+                  {{ field|add_class:"form-control" }}
+                {% elif field.field.widget.input_type == "select" %}
+                  {{ field|add_class:"form-select" }}
+                {% else %}
+                  {{ field|add_class:"form-control" }}
+                {% endif %}
+                {% if field.errors %}
+                  <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                {% endif %}
+                {% if field.help_text %}
+                  <div class="form-text">{{ field.help_text }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+            <div class="d-flex justify-content-between mt-4">
+              <button type="submit" class="btn btn-success px-4">ثبت پست</button>
+              <a href="{% url 'blog:dashboard' %}" class="btn btn-secondary px-4">بازگشت</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

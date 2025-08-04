@@ -16,10 +16,19 @@ def post_list(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'blog/post_list.html', {
-        'page_obj': page_obj
-    })
+    # آمار سریع
+    total_posts = Post.objects.count()
+    try:
+        from .models import Category  # اگه Category داری
+        categories_count = Category.objects.count()
+    except ImportError:
+        categories_count = None
 
+    return render(request, 'blog/post_list.html', {
+        'page_obj': page_obj,
+        'total_posts': total_posts,
+        'categories_count': categories_count,
+    })
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -43,6 +52,8 @@ def post_detail(request, slug):
         'comments': comments,
         'form': form
     })
+    
+    
 @login_required
 def post_create(request):
     if request.method == 'POST':
@@ -55,10 +66,13 @@ def post_create(request):
         form = PostForm()
     return render(request, 'blog/post_create.html', {'form': form})
 
+
 @login_required
 def dashboard(request):
     posts = Post.objects.order_by('-created_at')
-    return render(request, 'blog/dashboard.html', {'posts': posts})
+    total_comments = Comment.objects.count()
+    return render(request, 'blog/dashboard.html', {'posts': posts, 'total_comments': total_comments})
+
 
 @login_required
 def post_edit(request, slug):

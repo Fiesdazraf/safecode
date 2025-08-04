@@ -2,24 +2,25 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-12 col-md-10 col-lg-8">
 
       <!-- مقاله -->
-      <article class="bg-white p-4 rounded shadow-sm border border-light">
+      <article class="bg-white p-4 rounded shadow-sm border border-light mb-4">
         <h1 class="fw-bold text-primary mb-2">{{ post.title }}</h1>
-
-        <!-- دسته‌بندی -->
         {% if post.category %}
           <span class="badge bg-primary mb-2">دسته‌بندی: {{ post.category.name }}</span>
         {% endif %}
-
         <div class="d-flex justify-content-between align-items-center text-muted small mb-3">
           <span>منتشر شده در {{ post.created_at|date:"Y/m/d - H:i" }}</span>
-          <span>زمان مطالعه: {{ post.content|wordcount|divisibleby:200|add:1 }} دقیقه</span>
+          <span>
+            زمان مطالعه: 
+            {% with post.content|wordcount as wcount %}
+              {{ wcount|divisibleby:200|add:1 }} دقیقه
+            {% endwith %}
+          </span>
         </div>
-
         <hr>
         <div class="fs-5 lh-lg text-justify">
           {{ post.content|linebreaks }}
@@ -27,81 +28,91 @@
       </article>
 
       <!-- اطلاعات نویسنده و اشتراک‌گذاری -->
-      <div class="mt-4 bg-light rounded p-3 d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <div class="mt-4 mb-4 bg-light rounded p-3 d-flex flex-column flex-md-row justify-content-between align-items-center">
         <div class="text-muted small mb-2 mb-md-0">
           ✍️ نویسنده: <strong>فرزاد سیف</strong>
         </div>
         <div>
           <span class="me-2">📤 اشتراک‌گذاری:</span>
-          <a href="https://twitter.com/intent/tweet?text={{ post.title }}" target="_blank" class="text-decoration-none me-2">توییتر</a>
-          <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}" target="_blank" class="text-decoration-none">تلگرام</a>
+          <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="text-decoration-none me-2">
+            <i class="bi bi-twitter-x"></i> توییتر
+          </a>
+          <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="text-decoration-none">
+            <i class="bi bi-telegram"></i> تلگرام
+          </a>
         </div>
       </div>
 
-        <!-- نمایش نظرات -->
-        {% if comments %}
+      <!-- نمایش نظرات -->
+      <h4 class="text-primary mt-4 mb-3">🗨️ نظرات کاربران</h4>
+      {% if comments %}
         <div class="mb-4">
-            {% for comment in comments %}
+          {% for comment in comments %}
             <div class="bg-light p-3 rounded mb-2">
-                <strong>{{ comment.name }}</strong>
-                <p class="mb-1 small text-muted">{{ comment.created_at|date:"Y/m/d - H:i" }}</p>
-                <p>{{ comment.content|linebreaks }}</p>
+              <strong>{{ comment.name }}</strong>
+              <p class="mb-1 small text-muted">{{ comment.created_at|date:"Y/m/d - H:i" }}</p>
+              <p>{{ comment.content|linebreaks }}</p>
             </div>
-            {% endfor %}
+          {% endfor %}
         </div>
-        {% else %}
+      {% else %}
         <p class="text-muted">هنوز نظری ثبت نشده است.</p>
-        {% endif %}
+      {% endif %}
 
-        <!-- فرم نظر جدید -->
-        <div class="bg-white p-4 rounded shadow-sm border">
+      <!-- فرم نظر جدید -->
+      <div class="bg-white p-4 rounded shadow-sm border mb-5">
         <h5 class="mb-3">📝 ارسال نظر</h5>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">ارسال نظر</button>
+        <form method="post" class="needs-validation" novalidate>
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-3">
+              <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}
+                <div class="text-danger small">{{ field.errors|striptags }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary">ارسال نظر</button>
         </form>
-        </div>
-
+      </div>
 
       <!-- پست‌های دیگر -->
       {% if random_posts %}
-      <div class="mt-5">
-        <h4 class="mb-3 text-primary">پست‌های دیگر</h4>
-        <div class="row">
-          {% for item in random_posts %}
-          <div class="col-12 col-md-6 col-lg-4 mb-3">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body d-flex flex-column">
-                <h6 class="card-title">{{ item.title }}</h6>
-                <p class="card-text text-muted small">{{ item.created_at|date:"Y/m/d" }}</p>
-                <p class="card-text flex-grow-1">{{ item.content|truncatewords:20 }}</p>
-                <a href="{% url 'blog:post_detail' item.slug %}" class="btn btn-sm btn-outline-primary mt-2">مشاهده</a>
+        <div class="mt-5">
+          <h4 class="mb-3 text-primary">پست‌های دیگر</h4>
+          <div class="row">
+            {% for item in random_posts %}
+              <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body d-flex flex-column">
+                    <h6 class="card-title">{{ item.title }}</h6>
+                    <p class="card-text text-muted small">{{ item.created_at|date:"Y/m/d" }}</p>
+                    <p class="card-text flex-grow-1">{{ item.content|truncatewords:20 }}</p>
+                    <a href="{% url 'blog:post_detail' item.slug %}" class="btn btn-sm btn-outline-primary mt-2">
+                      مشاهده
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
-      </div>
       {% endif %}
 
-<hr class="my-5">
+      <hr class="my-5">
 
-<h4 class="text-primary">🗨️ نظرات کاربران</h4>
-
-    <!-- دکمه‌های پایین -->
-    <div class="mt-4 d-flex justify-content-between">
-    <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary">
-        <i class="bi bi-arrow-right-circle"></i> لیست پست‌ها
-    </a>
-
-    {% if user.is_authenticated %}
-        <a href="{% url 'blog:dashboard' %}" class="btn btn-dark">
-        🛠️ داشبورد مدیریت
+      <!-- دکمه‌های پایین -->
+      <div class="mt-4 d-flex justify-content-between">
+        <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-right-circle"></i> لیست پست‌ها
         </a>
-    {% endif %}
-    </div>
-
+        {% if user.is_authenticated %}
+          <a href="{% url 'blog:dashboard' %}" class="btn btn-dark">
+            🛠️ داشبورد مدیریت
+          </a>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>
