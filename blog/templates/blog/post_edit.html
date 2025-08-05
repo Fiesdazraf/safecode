@@ -1,5 +1,6 @@
 {% extends "blog/dashboard_base.html" %}
 {% block title %}ویرایش پست: {{ post.title }}{% endblock %}
+{% load widget_tweaks %}
 
 {% block content %}
 <div class="container py-4" dir="rtl">
@@ -23,9 +24,18 @@
             {% for field in form %}
               <div class="mb-3">
                 <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                {{ field }}
+                {% if field.field.widget.input_type == "textarea" %}
+                  {{ field|add_class:"form-control" }}
+                {% elif field.field.widget.input_type == "select" %}
+                  {{ field|add_class:"form-select" }}
+                {% else %}
+                  {{ field|add_class:"form-control" }}
+                {% endif %}
                 {% if field.errors %}
-                  <div class="text-danger small">{{ field.errors|striptags }}</div>
+                  <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                {% endif %}
+                {% if field.help_text %}
+                  <div class="form-text">{{ field.help_text }}</div>
                 {% endif %}
               </div>
             {% endfor %}

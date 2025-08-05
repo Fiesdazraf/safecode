@@ -5,6 +5,7 @@ from .forms import PostForm, CommentForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 
 # Create your views here.
@@ -54,7 +55,7 @@ def post_detail(request, slug):
     })
     
     
-@login_required
+
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -67,14 +68,14 @@ def post_create(request):
     return render(request, 'blog/post_create.html', {'form': form})
 
 
-@login_required
+
 def dashboard(request):
     posts = Post.objects.order_by('-created_at')
     total_comments = Comment.objects.count()
     return render(request, 'blog/dashboard.html', {'posts': posts, 'total_comments': total_comments})
 
 
-@login_required
+
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)
 
@@ -82,25 +83,28 @@ def post_edit(request, slug):
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
+            messages.success(request, "پست با موفقیت ویرایش شد.")
             return redirect('blog:dashboard')
     else:
         form = PostForm(instance=post)
+        
 
     return render(request, 'blog/post_edit.html', {'form': form, 'post': post})
 
 
-@login_required
+
 def post_delete(request, slug):
     post = get_object_or_404(Post, slug=slug)
 
     if request.method == 'POST':
         post.delete()
+        messages.success(request, "پست با موفقیت حذف شد.")
         return redirect('blog:dashboard')
 
     return render(request, 'blog/post_delete_confirm.html', {'post': post})
 
 
-@login_required
+
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     post_slug = comment.post.slug

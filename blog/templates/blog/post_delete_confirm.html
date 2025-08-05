@@ -2,12 +2,29 @@
 {% block title %}حذف پست: {{ post.title }}{% endblock %}
 
 {% block content %}
-<h2 class="text-danger mb-4">❗ حذف پست</h2>
-<p>آیا مطمئن هستید که می‌خواهید پست <strong>«{{ post.title }}»</strong> را حذف کنید؟ این عملیات قابل بازگشت نیست.</p>
-
-<form method="post">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-danger">بله، حذف شود</button>
-  <a href="{% url 'blog:dashboard' %}" class="btn btn-secondary">خیر، بازگشت</a>
-</form>
+<div class="container py-4" dir="rtl">
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <div class="card border-danger shadow-sm">
+        <div class="card-body">
+          <h2 class="text-danger mb-4 text-center">
+            ❗ حذف پست
+          </h2>
+          <p class="mb-4 text-center">
+            آیا مطمئن هستید که می‌خواهید پست
+            <strong>«{{ post.title }}»</strong>
+            را حذف کنید؟
+            <br>
+            <span class="small text-danger">این عملیات قابل بازگشت نیست.</span>
+          </p>
+          <form method="post" class="d-flex justify-content-center gap-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger px-4">بله، حذف شود</button>
+            <a href="{% url 'blog:dashboard' %}" class="btn btn-secondary px-4">خیر، بازگشت</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

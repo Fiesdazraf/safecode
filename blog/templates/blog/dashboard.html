@@ -19,66 +19,74 @@
 
 <!-- جدول پست‌ها -->
 <h2 class="mb-4 mt-4">📋 لیست پست‌ها</h2>
-<table class="table table-bordered table-hover bg-white">
-  <thead class="table-dark text-center">
-    <tr>
-      <th>عنوان</th>
-      <th>تاریخ</th>
-      <th>عملیات</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for post in posts %}
-      <tr class="text-center align-middle">
-        <td>{{ post.title }}</td>
-        <td>{{ post.created_at|date:"Y/m/d" }}</td>
-        <td>
-          <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-sm btn-info">
-            <i class="bi bi-eye"></i> مشاهده
-          </a>
-          <a href="{% url 'blog:post_edit' post.slug %}" class="btn btn-sm btn-warning">
-            <i class="bi bi-pencil"></i> ویرایش
-          </a>
-          <a href="{% url 'blog:post_delete' post.slug %}" class="btn btn-sm btn-danger">
-            <i class="bi bi-trash"></i> حذف
-          </a>
-        </td>
-      </tr>
-    {% empty %}
+<div class="table-responsive">
+  <table class="table table-bordered table-hover bg-white align-middle text-center">
+    <thead class="table-dark">
       <tr>
-        <td colspan="3" class="text-center text-muted">هیچ پستی هنوز ثبت نشده است.</td>
+        <th>عنوان</th>
+        <th>تاریخ</th>
+        <th>عملیات</th>
       </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+        <tr>
+          <td>{{ post.title }}</td>
+          <td>{{ post.created_at|date:"Y/m/d" }}</td>
+          <td>
+            <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-sm btn-info me-1">
+              <i class="bi bi-eye"></i> مشاهده
+            </a>
+            <a href="{% url 'blog:post_edit' post.slug %}" class="btn btn-sm btn-warning me-1">
+              <i class="bi bi-pencil"></i> ویرایش
+            </a>
+            <a href="{% url 'blog:post_delete' post.slug %}" class="btn btn-sm btn-danger">
+              <i class="bi bi-trash"></i> حذف
+            </a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="3" class="text-center text-muted">هیچ پستی هنوز ثبت نشده است.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
 <!-- مدیریت نظرات کاربران -->
 <hr class="mt-5 mb-4">
-<h4 class="text-primary">🗨️ نظرات کاربران</h4>
+<h4 class="text-primary mb-4">🗨️ نظرات کاربران</h4>
 
-{% for post in posts %}
-  {% if post.comments.exists %}
-    <div class="mb-3">
-      <h6 class="mb-2">
-        {{ post.title }}
-        <span class="badge bg-secondary ms-2">{{ post.comments.count }} نظر</span>
-      </h6>
-      {% for comment in post.comments.all %}
-        <div class="bg-light border rounded p-3 mb-2 d-flex justify-content-between align-items-start">
-          <div>
-            <strong>{{ comment.name }}</strong> 
-            <span class="text-muted small">– {{ comment.created_at|date:"Y/m/d - H:i" }}</span><br>
-            <p class="mb-0">{{ comment.content|linebreaks }}</p>
-          </div>
-          <a href="{% url 'blog:delete_comment' comment.id %}" class="btn btn-sm btn-danger ms-3">
-            <i class="bi bi-trash"></i> حذف
-          </a>
+{% with total_comment_count=0 %}
+  {% for post in posts %}
+    {% if post.comments.exists %}
+      {% with total_comment_count=total_comment_count|add:post.comments.count %}
+        <div class="mb-4">
+          <h6 class="mb-2">
+            {{ post.title }}
+            <span class="badge bg-secondary ms-2">{{ post.comments.count }} نظر</span>
+          </h6>
+          {% for comment in post.comments.all %}
+            <div class="bg-light border rounded p-3 mb-2 d-flex justify-content-between align-items-start">
+              <div>
+                <strong>{{ comment.name }}</strong>
+                <span class="text-muted small">– {{ comment.created_at|date:"Y/m/d - H:i" }}</span><br>
+                <p class="mb-0">{{ comment.content|linebreaks }}</p>
+              </div>
+              <a href="{% url 'blog:delete_comment' comment.id %}" class="btn btn-sm btn-danger ms-3">
+                <i class="bi bi-trash"></i> حذف
+              </a>
+            </div>
+          {% endfor %}
         </div>
-      {% endfor %}
-    </div>
+      {% endwith %}
+    {% endif %}
+  {% endfor %}
+
+  {% if total_comment_count == 0 %}
+    <p class="text-muted text-center mt-4">هیچ نظری برای هیچ پستی ثبت نشده است.</p>
   {% endif %}
-{% empty %}
-  <p class="text-muted">هنوز نظری ثبت نشده است.</p>
-{% endfor %}
+{% endwith %}
 
 {% endblock %}
