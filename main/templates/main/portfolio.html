@@ -15,7 +15,7 @@
       <div class="col-12 col-sm-6 col-lg-4">
         <div class="portfolio-card shadow-sm h-100 d-flex flex-column">
           <div class="img-wrapper">
-            <img src="{{ item.image.url }}" class="card-img-top rounded-top" alt="{{ item.title }}" loading="lazy">
+            <img src="{% static 'portfolio/todo/todo-preview.png' %}" class="card-img-top rounded-top" alt="{{ item.title }}" loading="lazy">
           </div>
           <div class="card-body d-flex flex-column p-3">
             <h3 class="card-title mb-2" style="font-size: clamp(1rem, 2.5vw, 1.3rem);">
@@ -38,7 +38,7 @@
     <div class="col-12 col-sm-6 col-lg-4">
     <div class="portfolio-card shadow-sm h-100 d-flex flex-column">
       <div class="img-wrapper">
-        <img src="{% static 'portfolio/blog-screenshot.png' %}" class="card-img-top rounded-top" alt="Blog CMS Demo" loading="lazy">
+        <img src="{% static 'portfolio/blog/blog-screenshot.png' %}" class="card-img-top rounded-top" alt="Blog CMS Demo" loading="lazy">
       </div>
       <div class="card-body d-flex flex-column p-3">
         <h3 class="card-title mb-2" style="font-size: clamp(1rem, 2.5vw, 1.3rem);">
@@ -55,5 +55,25 @@
   </div>
 
   </div>
+
+<div class="col-12 col-sm-6 col-lg-4">
+  <div class="portfolio-card shadow-sm h-100 d-flex flex-column">
+    <div class="img-wrapper">
+      <img src="{% static 'portfolio/weather/weather-demo.png' %}" class="card-img-top rounded-top" alt="نمونه Weather App" loading="lazy">
+    </div>
+    <div class="card-body d-flex flex-column p-3">
+      <h3 class="card-title mb-2" style="font-size: clamp(1rem, 2.5vw, 1.3rem);">
+        وب‌اپ هواشناسی (Weather App)
+      </h3>
+      <p class="card-text text-muted small" style="font-size: clamp(0.9rem, 2vw, 1rem);">
+        نمایش لحظه‌ای آب‌وهوا، پیش‌بینی ۱۰ روزه، ساعت محلی، آیکون SVG حرفه‌ای و ریسپانسیو کامل.
+      </p>
+      <a href="{% static 'portfolio/weather/index.html' %}" class="btn btn-sm btn-outline-primary mt-auto" target="_blank">
+        مشاهده پروژه
+      </a>
+    </div>
+  </div>
+</div>
+
 </section>
 {% endblock %}
