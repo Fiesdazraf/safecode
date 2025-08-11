@@ -7,79 +7,157 @@
 {% block og_description %}مجموعه‌ای از پروژه‌های طراحی سایت و اپلیکیشن وب با Django توسط فرزاد سیف با طراحی مدرن و سئو محور.{% endblock %}
 
 {% block content %}
-<section class="py-4 py-md-5 container">
-  <h2 class="text-center fw-bold mb-5" style="font-size: clamp(1.5rem, 4vw, 2.3rem);">نمونه‌کارهای طراحی سایت</h2>
 
-  <div class="row g-4">
+<style>
+  .portfolio-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px;
+  }
+  .portfolio-card{
+    background:#fff; border-radius:16px; padding:16px;
+    box-shadow:0 4px 20px rgba(0,0,0,.05);
+    display:flex; flex-direction:column; overflow:hidden;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .portfolio-card:hover{ transform:translateY(-4px); box-shadow:0 8px 28px rgba(0,0,0,.08) }
+
+  .project-icon{
+    width:110px; height:110px; margin:12px auto 8px; border-radius:22px;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 18px rgba(102,126,234,.25);
+  }
+  .project-icon img{ width:70px; height:70px; object-fit:contain; display:block; }
+
+  .card-body{ padding:12px; display:flex; flex-direction:column; }
+  .card-title{ font-size:1rem; font-weight:700; color:#2d3748; margin:6px 0 0 }
+  .card-text{ color:#6b7a90; font-size:.92rem; line-height:1.7; margin:10px 0 14px }
+  .project-btn{
+    margin-top:auto; align-self:flex-start;
+    background:linear-gradient(135deg,#667eea,#764ba2); color:#fff;
+    border:none; border-radius:10px; padding:8px 14px; text-decoration:none; font-weight:600;
+    transition:filter .2s ease; display:inline-flex; align-items:center; gap:8px;
+  }
+  .project-btn:hover{ filter:brightness(1.05) }
+
+  @media (max-width:480px){
+    .project-icon{ width:96px; height:96px; border-radius:18px }
+    .project-icon img{ width:62px; height:62px }
+  }
+</style>
+
+<section class="py-4 py-md-5 container">
+  <h2 class="text-center fw-bold mb-5" style="font-size:clamp(1.5rem,4vw,2.3rem);">
+    نمونه‌کارهای طراحی سایت
+  </h2>
+
+  <div class="portfolio-grid">
+
+    {# ----- Dynamic items (فقط آیتم‌هایی که دستی نیاوردیم) ----- #}
     {% for item in items %}
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="portfolio-card border-0 shadow-sm h-100 rounded-4 overflow-hidden d-flex flex-column">
-          <div class="ratio ratio-16x9 bg-light">
-            <img src="{% static 'portfolio/todo/todo-preview.png' %}" class="object-fit-cover w-100 h-100" alt="{{ item.title }}" loading="lazy">
+      {% if item.title != 'Todo App' and item.title != 'پروژه Blog CMS' and item.title != 'وب‌اپ هواشناسی' %}
+        <div class="portfolio-card">
+          <div class="project-icon">
+            {# اولویت: icon_name → slugify(title).svg → default.svg #}
+            {% if item.icon_name %}
+              <img src="{% static 'main/icons/' %}{{ item.icon_name }}" alt="Icon - {{ item.title }}" loading="lazy" decoding="async" width="70" height="70">
+            {% else %}
+              {% with slug=item.title|slugify %}
+                {% if slug %}
+                  <img src="{% static 'main/icons/' %}{{ slug }}.svg" alt="Icon - {{ item.title }}" loading="lazy" decoding="async" width="70" height="70">
+                {% else %}
+                  <img src="{% static 'main/icons/default.svg' %}" alt="Icon - {{ item.title }}" loading="lazy" decoding="async" width="70" height="70">
+                {% endif %}
+              {% endwith %}
+            {% endif %}
           </div>
-          <div class="card-body d-flex flex-column p-3">
-            <div class="d-flex align-items-center mb-2">
-              <i class="bi bi-window-stack text-primary fs-5 me-2"></i>
-              <h3 class="card-title fs-6 mb-0">{{ item.title }}</h3>
-            </div>
-            <p class="card-text text-muted small mt-2 mb-3" style="font-size: 0.92rem;">
-              {{ item.description|truncatechars:120 }}
-            </p>
+
+          <div class="card-body">
+            <h3 class="card-title">{{ item.title }}</h3>
+            <p class="card-text">{{ item.description|truncatechars:120 }}</p>
             {% if item.project_url %}
-              <a href="{% static 'todo-app/index.html' %}" class="btn btn-outline-primary btn-sm mt-auto" target="_blank">
-                <i class="bi bi-box-arrow-up-right me-1"></i>
+              <a href="{{ item.project_url }}" class="project-btn" target="_blank" rel="noopener">
                 مشاهده پروژه
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor" style="color:#fff;">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14 3h7m0 0v7m0-7L10 14"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 21h14a2 2 0 0 0 2-2V9"/>
+                </svg>
               </a>
             {% endif %}
           </div>
         </div>
-      </div>
+      {% endif %}
     {% empty %}
-      <div class="col-12 text-center text-muted">
-        هیچ نمونه‌کاری ثبت نشده است.
-      </div>
+      <div class="text-center text-muted">هیچ نمونه‌کاری ثبت نشده است.</div>
     {% endfor %}
 
-    <!-- پروژه‌های خاص -->
-    <div class="col-12 col-sm-6 col-lg-4">
-      <div class="portfolio-card border-0 shadow-sm h-100 rounded-4 overflow-hidden d-flex flex-column">
-        <div class="ratio ratio-16x9 bg-light">
-          <img src="{% static 'portfolio/blog/blog-screenshot.png' %}" class="object-fit-cover w-100 h-100" alt="Blog CMS Demo" loading="lazy">
-        </div>
-        <div class="card-body d-flex flex-column p-3">
-          <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-journal-richtext text-info fs-5 me-2"></i>
-            <h3 class="card-title fs-6 mb-0">پروژه Blog CMS</h3>
-          </div>
-          <p class="card-text text-muted small mt-2 mb-3">
-            سیستم ساده مدیریت محتوا با قابلیت انتشار و ویرایش پست‌ها بدون نیاز به ورود.
-          </p>
-          <a href="{% url 'blog:post_list' %}" class="btn btn-outline-info btn-sm mt-auto" target="_blank" rel="noopener">
-            <i class="bi bi-box-arrow-up-right me-1"></i> مشاهده پروژه
-          </a>
-        </div>
+    {# ----- Special projects (manual) ----- #}
+
+    {# Blog CMS #}
+    <div class="portfolio-card">
+      <div class="project-icon">
+        <img src="{% static 'main/icons/cms.svg' %}" alt="CMS icon" loading="lazy" decoding="async" width="70" height="70">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title"> CMS blog</h3>
+        <p class="card-text">سیستم ساده مدیریت محتوا با قابلیت انتشار، ویرایش و یا حذف پست‌ها.</p>
+        <a href="{% url 'blog:post_list' %}" class="project-btn" target="_blank" rel="noopener">
+          مشاهده پروژه
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor" style="color:#fff;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M14 3h7m0 0v7m0-7L10 14"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 21h14a2 2 0 0 0 2-2V9"/>
+          </svg>
+        </a>
       </div>
     </div>
 
-    <div class="col-12 col-sm-6 col-lg-4">
-      <div class="portfolio-card border-0 shadow-sm h-100 rounded-4 overflow-hidden d-flex flex-column">
-        <div class="ratio ratio-16x9 bg-light">
-          <img src="{% static 'portfolio/weather/weather-demo.png' %}" class="object-fit-cover w-100 h-100" alt="Weather App" loading="lazy">
-        </div>
-        <div class="card-body d-flex flex-column p-3">
-          <div class="d-flex align-items-center mb-2">
-            <i class="bi bi-cloud-sun text-warning fs-5 me-2"></i>
-            <h3 class="card-title fs-6 mb-0">وب‌اپ هواشناسی</h3>
-          </div>
-          <p class="card-text text-muted small mt-2 mb-3">
-            نمایش لحظه‌ای وضعیت هوا، پیش‌بینی ۱۰ روزه، ساعت محلی، آیکون SVG و طراحی ریسپانسیو.
-          </p>
-          <a href="{% static 'weather-app/index.html' %}" class="btn btn-outline-warning btn-sm mt-auto" target="_blank">
-            <i class="bi bi-box-arrow-up-right me-1"></i> مشاهده پروژه
-          </a>
-        </div>
+    {# Weather App #}
+    <div class="portfolio-card">
+      <div class="project-icon">
+        <img src="{% static 'main/icons/weather.svg' %}" alt="Weather App icon" loading="lazy" decoding="async" width="70" height="70">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">وب‌اپ هواشناسی</h3>
+        <p class="card-text">نمایش لحظه‌ای وضعیت هوا، ساعت محلی و پیش‌بینی  آب و هوای روز های آینده.</p>
+        <a href="{% static 'weather-app/index.html' %}" class="project-btn" target="_blank" rel="noopener">
+          مشاهده پروژه
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor" style="color:#fff;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M14 3h7m0 0v7m0-7L10 14"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 21h14a2 2 0 0 0 2-2V9"/>
+          </svg>
+        </a>
       </div>
     </div>
+
+    {# Todo App (static demo build) #}
+    <div class="portfolio-card">
+      <div class="project-icon">
+        <img src="{% static 'main/icons/todo-app.svg' %}" alt="Todo App icon" loading="lazy" decoding="async" width="70" height="70">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">وب‌اپ فهرست کارها</h3>
+        <p class="card-text">یک اپلیکیشن ساده و کاربرپسند برای مدیریت کارهای روزانه.</p>
+        <a href="{% static 'todo-app/index.html' %}" class="project-btn" target="_blank" rel="noopener">
+          مشاهده پروژه
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor" style="color:#fff;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M14 3h7m0 0v7m0-7L10 14"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 21h14a2 2 0 0 0 2-2V9"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
   </div>
 </section>
 {% endblock %}
