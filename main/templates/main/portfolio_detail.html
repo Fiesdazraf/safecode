@@ -1,14 +1,90 @@
 {% extends 'main/base.html' %}
-{% block title %}{{ item.title }}{% endblock %}
+{% load static %}
+
+{% block title %}{{ item.title }} | نمونه‌کار{% endblock %}
+{% block meta_description %}{{ item.description|default:item.title|truncatechars:160 }}{% endblock %}
+{% block og_title %}{{ item.title }} | نمونه‌کار{% endblock %}
+{% block og_description %}{{ item.description|default:item.title|truncatechars:160 }}{% endblock %}
+
 {% block content %}
-<section class="container py-5">
-  <h1 class="text-center mb-4">{{ item.title }}</h1>
-  <img src="{{ item.image.url }}" class="img-fluid mb-4 rounded" alt="{{ item.title }}">
-  <p class="text-muted">{{ item.description }}</p>
-  {% if item.project_url %}
-    <div class="text-center mt-4">
-      <a href="{{ item.project_url }}" target="_blank" class="btn btn-outline-primary">مشاهده پروژه</a>
+<section class="py-10">
+  <div class="container mx-auto max-w-screen-lg px-4">
+
+    <!-- Header with title and back link -->
+    <div class="mb-6 flex items-start justify-between gap-4">
+      <h1 class="text-2xl md:text-3xl font-extrabold">{{ item.title }}</h1>
+      <a href="{% url 'portfolio' %}"
+         class="hidden md:inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
+        بازگشت به نمونه‌کارها
+      </a>
     </div>
-  {% endif %}
+
+    <!-- Project cover image -->
+    {% if item.image %}
+      <img src="{{ item.image.url }}" alt="{{ item.title }}"
+           class="w-full rounded-2xl object-cover aspect-[16/9]">
+    {% endif %}
+
+    <!-- Action buttons (demo / repo) -->
+    <div class="mt-4 flex flex-wrap items-center gap-3">
+      {% if item.project_url %}
+        <a href="{{ item.project_url }}" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold
+                  text-white bg-gradient-to-tr from-indigo-600 to-violet-600
+                  shadow-sm hover:shadow-md hover:brightness-105 active:translate-y-px">
+          مشاهده دمو
+          <i class="bi bi-box-arrow-up-right text-base"></i>
+        </a>
+      {% endif %}
+      {% if item.repo_url %}
+        <a href="{{ item.repo_url }}" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+          سورس کد
+          <i class="bi bi-github"></i>
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Project description -->
+    {% if item.description %}
+      <article class="prose prose-slate rtl mt-6 max-w-none">
+        {{ item.description|linebreaks }}
+      </article>
+    {% endif %}
+
+    <!-- Related projects -->
+    {% if related_items %}
+      <hr class="my-10 border-slate-200">
+      <h2 class="mb-4 text-xl font-bold">پروژه‌های مرتبط</h2>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {% for r in related_items %}
+          <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm hover:-translate-y-1 hover:shadow-md transition">
+            <!-- Link wrapper -->
+            <a href="{% url 'portfolio_detail' slug=r.slug %}" class="stretched-link" aria-label="{{ r.title }}"></a>
+            
+            <!-- Thumbnail -->
+            {% if r.image %}
+              <img src="{{ r.image.url }}" alt="{{ r.title }}" class="mb-3 w-full h-40 object-cover rounded-xl">
+            {% endif %}
+
+            <!-- Title & short description -->
+            <h3 class="text-base font-semibold">{{ r.title }}</h3>
+            {% if r.description %}
+              <p class="mt-1 text-sm text-slate-600 line-clamp-3">{{ r.description }}</p>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Back button (mobile) -->
+    <div class="mt-8 md:hidden">
+      <a href="{% url 'portfolio' %}"
+         class="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+        بازگشت
+      </a>
+    </div>
+
+  </div>
 </section>
 {% endblock %}

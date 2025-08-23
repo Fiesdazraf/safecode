@@ -5,75 +5,139 @@
 {% endblock %}
 
 {% block content %}
-<section class="container py-4">
-  <h1 class="text-center fw-bold mb-3" style="font-size: clamp(1.6rem, 5vw, 2.2rem);">تماس با طراح سایت</h1>
-  <p class="text-center text-muted mb-4" style="font-size: clamp(1rem, 3.5vw, 1.1rem);">
+<style>
+  /* ===== Contact page: hard-scoped, no conflicts ===== */
+  .contact-page .contact-form { max-width: 780px; margin: 0 auto; }
+
+  .contact-page .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 768px) {
+    .contact-page .contact-grid { grid-template-columns: 1fr; }
+  }
+  .contact-page .field { display: flex; flex-direction: column; gap: 6px; }
+  .contact-page .field--full { grid-column: 1 / -1; }
+
+  .contact-page label {
+    font-weight: 600;
+    color: #1f2937;
+    text-align: right;
+    margin-bottom: 6px;
+  }
+
+  /* فیلدهای بدون تداخل (با !important) */
+  .contact-page .c-input {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    padding: 14px 16px !important;
+    border: 1px solid #cbd5e1 !important;      /* slate-300 */
+    border-radius: 14px !important;
+    background: #fff !important;
+    color: #0f172a !important;                  /* slate-900 */
+    outline: none !important;
+    transition: border-color .2s, box-shadow .2s, background .2s !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+  }
+  .contact-page .c-input::placeholder {
+    color: #94a3b8 !important;                 /* slate-400 */
+    opacity: 1 !important;
+  }
+  .contact-page .c-input:focus {
+    border-color: #7c3aed !important;          /* بنفش تو */
+    box-shadow: 0 0 0 .25rem rgba(124,58,237,.2) !important;
+    background: #fff !important;
+  }
+  .contact-page textarea.c-input {
+    min-height: 140px !important;
+    line-height: 1.9 !important;
+    resize: vertical !important;
+  }
+
+  /* جهت متن داخل فیلدها */
+  .contact-page .c-rtl { direction: rtl !important; text-align: right !important; }
+  .contact-page .c-rtl::placeholder { text-align: right !important; }
+  .contact-page .c-ltr { direction: ltr !important; text-align: left !important; }
+  .contact-page .c-ltr::placeholder { text-align: left !important; }
+</style>
+
+
+<section class="py-8 contact-page">
+  <h1 class="text-center font-extrabold mb-3" style="font-size: clamp(1.6rem, 5vw, 2.2rem);">
+    تماس با طراح سایت
+  </h1>
+  <p class="text-center text-slate-600 mb-8" style="font-size: clamp(1rem, 3.5vw, 1.1rem);">
     برای مشاوره، درخواست پروژه یا سفارش <strong>طراحی وب‌سایت</strong>، لطفاً از طریق فرم زیر با من تماس بگیرید.
   </p>
 
-  <div class="contact-form mx-auto px-3" style="max-width: 520px;">
+  <div class="mx-auto w-full max-w-md px-3">
     {% if success %}
-      <div id="success-alert" class="alert alert-success animate__animated animate__fadeInDown" role="alert">
-        پیام شما با موفقیت ارسال شد!
+      <div id="success-alert" class="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-green-700">
+        پیام شما ثبت شد. {% if email_sent %}ایمیل هم با موفقیت ارسال شد.{% else %}اما ارسال ایمیل انجام نشد.{% endif %}
+        {% if email_error %}<div class="mt-1 text-sm">{{ email_error }}</div>{% endif %}
       </div>
     {% endif %}
-    <div id="form-alert" class="alert alert-danger d-none animate__animated animate__shakeX" role="alert"></div>
-    <form method="post" class="needs-validation" novalidate id="contactForm">
-      {% csrf_token %}
-      <div class="mb-3">{{ form.name.label_tag }}{{ form.name }}</div>
-      <div class="mb-3">{{ form.email.label_tag }}{{ form.email }}</div>
-      <div class="mb-3">{{ form.message.label_tag }}{{ form.message }}</div>
-      <button type="submit" class="btn btn-primary w-100">ارسال درخواست طراحی سایت</button>
-    </form>
+
+    {% if form.non_field_errors %}
+      <div class="mb-4 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-rose-700">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+
+<form method="post" class="contact-form" dir="rtl">
+  {% csrf_token %}
+
+  <div class="contact-grid">
+    <div class="field">
+      <label for="id_name">نام</label>
+      <input id="id_name" name="name" type="text"
+             class="c-input c-rtl" placeholder="نام شما" required autocomplete="name">
+    </div>
+
+    <div class="field">
+      <label for="id_email">ایمیل</label>
+      <input id="id_email" name="email" type="email"
+              class="c-input c-rtl" placeholder="ایمیل شما" required autocomplete="email">    </div>
+
+    <div class="field field--full">
+      <label for="id_message">پیام</label>
+      <textarea id="id_message" name="message"
+                class="c-input c-rtl" placeholder="متن پیام شما…" required></textarea>    </div>
   </div>
 
-  <h2 class="text-center mt-5 mb-3" style="font-size: clamp(1.3rem, 4vw, 1.8rem);">شبکه‌های اجتماعی</h2>
-  <div class="text-center">
-    <a href="https://instagram.com/_farzadseif" class="social-btn instagram" target="_blank"><i class="bi bi-instagram"></i></a>
-    <a href="https://t.me/LeoRave" class="social-btn telegram" target="_blank"><i class="bi bi-telegram"></i></a>
-    <a href="https://github.com/fiesdazraf" class="social-btn github" target="_blank"><i class="bi bi-github"></i></a>
+  <div style="text-align:center; margin-top: 16px;">
+    <button type="submit" class="btn btn-primary">ارسال پیام</button>
+  </div>
+</form>
+  </div>
+
+  <h2 class="text-center mt-10 mb-4 text-xl font-bold">شبکه‌های اجتماعی</h2>
+  <div class="flex items-center justify-center gap-3">
+    <a href="https://instagram.com/_farzadseif" target="_blank"
+       class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700
+              hover:bg-slate-50 hover:text-indigo-600 transition"
+       aria-label="Instagram"><i class="bi bi-instagram text-xl"></i></a>
+
+    <a href="https://t.me/LeoRave" target="_blank"
+       class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700
+              hover:bg-slate-50 hover:text-sky-600 transition"
+       aria-label="Telegram"><i class="bi bi-telegram text-xl"></i></a>
+
+    <a href="https://github.com/fiesdazraf" target="_blank"
+       class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700
+              hover:bg-slate-50 hover:text-slate-900 transition"
+       aria-label="GitHub"><i class="bi bi-github text-xl"></i></a>
   </div>
 </section>
 
 <script>
-const form = document.getElementById('contactForm');
-const alertBox = document.getElementById('form-alert');
-const fields = form.querySelectorAll('input, textarea');
-
-form.addEventListener('submit', function(e) {
-  let valid = true;
-  let firstInvalid = null;
-
-  fields.forEach(field => {
-    if (!field.value.trim()) {
-      valid = false;
-      field.classList.add('is-invalid', 'animate__animated', 'animate__shakeX');
-      if (!firstInvalid) firstInvalid = field;
-    }
-  });
-
-  if (!valid) {
-    e.preventDefault(); // ❗ فقط در صورت نامعتبر بودن ارسال نکن
-    alertBox.textContent = 'لطفاً همه فیلدها را پر کنید.';
-    alertBox.classList.remove('d-none');
-    alertBox.classList.add('animate__shakeX');
-    if (firstInvalid) firstInvalid.focus();
+  // حذف بنر موفقیت بعد از چند ثانیه
+  const successAlert = document.getElementById('success-alert');
+  if (successAlert) {
+    setTimeout(() => successAlert.remove(), 3500);
   }
-});
-
-fields.forEach(field => {
-  field.addEventListener('focus', function() {
-    field.classList.remove('is-invalid', 'animate__animated', 'animate__shakeX');
-    alertBox.classList.add('d-none');
-  });
-});
-
-const successAlert = document.getElementById('success-alert');
-if (successAlert) {
-  setTimeout(() => {
-    successAlert.classList.add('animate__fadeOutUp');
-    setTimeout(() => successAlert.remove(), 1000);
-  }, 3500);
-}
 </script>
 {% endblock %}

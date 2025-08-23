@@ -1,0 +1,68 @@
+/* مسیرها تا کلاس‌ها Purge نشن */
+@source "./templates";
+@source "./**/templates";
+@source "./static/**/*.js";
+
+/* Tailwind core */
+@import "tailwindcss";
+
+/* تایپوگرافی (اختیاری) */
+@plugin "@tailwindcss/typography";
+
+/* --- کامپوننت‌های پایدار برای پورتفولیو --- */
+@layer components {
+  .portfolio-grid {
+    @apply grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3;
+  }
+  .portfolio-card {
+    @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-sm
+         transition hover:-translate-y-1 hover:shadow-lg
+         hover:border-indigo-400 hover:shadow-indigo-100 hover:bg-indigo-50/50;  }
+  .portfolio-icon-wrap {
+    @apply flex justify-center mb-4;
+  }
+  .portfolio-icon {
+    @apply h-24 w-24 rounded-xl object-contain;
+  }
+  .portfolio-image {
+    @apply mb-3 w-full h-44 object-cover rounded-xl;
+  }
+  .portfolio-title {
+    @apply text-base font-semibold;
+  }
+  .portfolio-desc {
+    @apply mt-1 text-sm text-slate-600 line-clamp-3;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold
+           text-white bg-gradient-to-tr from-indigo-600 to-violet-600
+           shadow-sm hover:shadow-md hover:brightness-105 active:translate-y-px;
+  }
+  .home-card {
+    @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-sm
+          transition hover:shadow-md hover:border-slate-300;
+  }
+    @font-face {
+    font-family: "IranSans";
+    src: url("./fonts/IRANSansWeb.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "IranSans";
+    src: url("./fonts/IRANSansWeb_Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* اعمال سراسری فونت */
+  @layer base {
+    body,
+    h1,h2,h3,h4,h5,h6,
+    input, textarea, button {
+      font-family: "IranSans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+  }
+}

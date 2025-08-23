@@ -1,0 +1,34 @@
+{% load static %}
+
+{# templates/main/_items.html #}
+<div class="portfolio-grid">
+  {% for it in items %}
+    <article class="portfolio-card">
+      <a href="{% url 'portfolio_detail' slug=it.slug %}" class="stretched-link" aria-label="{{ it.title }}"></a>
+
+      <div class="mb-3">
+        {% if it.image %}
+          <img src="{{ it.image.url }}" alt="{{ it.title }}" class="w-full h-44 object-cover rounded-xl">
+        {% endif %}
+      </div>
+
+      <h3 class="text-base font-semibold">{{ it.title }}</h3>
+      {% if it.description %}
+        <p class="mt-1 text-sm text-slate-600 line-clamp-3">{{ it.description }}</p>
+      {% endif %}
+    </article>
+  {% empty %}
+    <div class="col-span-full text-center text-slate-500">موردی یافت نشد.</div>
+  {% endfor %}
+</div>
+
+{% if has_next %}
+  <div class="mt-6 text-center">
+    <button 
+      class="btn-primary"
+      hx-get="{% url 'portfolio_items_partial' %}?page={{ page|add:1 }}&per={{ per }}&order={{ order }}&q={{ q|urlencode }}"
+      hx-target="#items" hx-swap="outerHTML">
+      بارگذاری بیشتر
+    </button>
+  </div>
+{% endif %}

@@ -2,41 +2,210 @@
 {% load static %}
 
 {% block title %}فرزاد سیف | برنامه‌نویس، طراح وب و توسعه‌دهنده Django{% endblock %}
-{% block meta_description %}فرزاد سیف - طراح و برنامه‌نویس وب. خدمات طراحی سایت، توسعه وب با Django، نمونه‌کارها و راه‌های تماس را در سایت SafeCode ببینید.{% endblock %}
-{% block og_title %}فرزاد سیف | SafeCode{% endblock %}
-{% block og_description %}طراح سایت با Django، ارائه‌دهنده خدمات طراحی وب، توسعه حرفه‌ای، رابط کاربری و سئو برای کسب‌وکارهای هوشمند.{% endblock %}
+{% block meta_description %}
+فرزاد سیف - طراح و برنامه‌نویس وب. خدمات طراحی سایت، توسعه وب با Django، نمونه‌کارها و راه‌های تماس را در سایت SafeCode ببینید.
+{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="py-5">
-  <div class="text-center mx-auto" style="max-width: 720px;">
-    <h1 class="fw-bold mt-3">فرزاد سیف</h1>
-    <h2 class="text-primary-custom mb-3">طراح و توسعه‌دهنده وب</h2>
-    <p class="lead mb-4">
-      با چند سال تجربه در <strong>توسعه وب</strong> و <strong>طراحی وب‌سایت مدرن</strong>، به کسب‌وکارها کمک می‌کنم تا با <strong>ساخت سایت حرفه‌ای</strong> دیده شوند و در نتایج گوگل بدرخشند.
+
+<!-- Hero -->
+<section class="relative overflow-hidden py-16 md:py-20 bg-[radial-gradient(50%_80%_at_70%_20%,rgba(89,150,146,0.12)_0%,transparent_70%)]">
+  <div class="max-w-screen-lg mx-auto px-4 text-center">
+    <h1 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight reveal text-highlight">
+      فرزاد سیف
+    </h1>
+    <h2 class="mt-2 text-lg md:text-2xl font-bold reveal text-accent">
+      طراح و توسعه‌دهنده وب
+    </h2>
+
+    <p class="mx-auto mt-4 max-w-2xl reveal text-text">
+      با تمرکز روی <strong class="text-highlight">توسعه وب</strong> و <strong class="text-highlight">طراحی مدرن</strong>، به کسب‌وکارها کمک می‌کنم
+      <strong class="text-highlight">سایت‌های سریع، سئو-محور و قابل توسعه</strong> بسازند.
     </p>
-    <div class="d-flex justify-content-center gap-3 flex-wrap">
-      <a href="{% url 'portfolio' %}" class="btn btn-primary px-4">مشاهده نمونه‌کارها</a>
-      <a href="{% url 'contact' %}" class="btn btn-outline-primary px-4">تماس با من</a>
+
+    <div class="mt-6 flex flex-wrap justify-center gap-3 reveal">
+      <a href="{% url 'portfolio' %}" class="btn">مشاهده نمونه‌کارها</a>
+      <a href="{% url 'contact' %}" class="btn-ghost">تماس با من</a>
+    </div>
+
+    <div class="mt-5 flex flex-wrap justify-center gap-2 reveal">
+      <span class="inline-flex items-center rounded-full border border-border bg-surface-2 px-3 py-1 text-sm text-highlight/90">+3 سال تجربه</span>
+      <span class="inline-flex items-center rounded-full border border-border bg-surface-2 px-3 py-1 text-sm text-highlight/90">UI تمیز</span>
+      <span class="inline-flex items-center rounded-full border border-border bg-surface-2 px-3 py-1 text-sm text-highlight/90">بهینه برای گوگل</span>
+    </div>
+  </div>
+
+  <!-- Decorations -->
+  <div class="pointer-events-none absolute -bottom-12 -left-12 h-40 w-40 rounded-full bg-accent/20 blur-2xl"></div>
+  <div class="pointer-events-none absolute -top-10 -right-10 h-36 w-36 rounded-full bg-highlight/20 blur-2xl"></div>
+</section>
+
+<!-- ABOUT (minimal, friendly, Django-focused) -->
+<section class="py-8 md:py-10">
+  <div class="max-w-screen-lg mx-auto px-4">
+    <div class="reveal rounded-xl2 border border-border bg-surface-2 p-6 md:p-8 shadow-soft">
+      <!-- Centered heading with inline underline -->
+      <div class="text-center">
+        <h2 class="relative inline-block text-2xl md:text-3xl font-extrabold pb-2 text-highlight">
+          درباره من
+          <span style="display:block; height:4px; border-radius:9999px;
+                      background:linear-gradient(90deg,#599692,#7aaba8,#dfe5ec);
+                      margin-top:6px;"></span>
+        </h2>
+      </div>
+
+      <p class="mx-auto max-w-3xl leading-8 text-text text-[15.5px] md:text-[16px] text-center mt-4">
+        من، فرزاد سیف، توسعه‌دهنده‌ی وب با <span class="font-semibold text-highlight">جانگو</span>.
+        سعی می‌کنم برای هر پروژه، راه‌حلی ساده، شفاف و نتیجه‌محور بسازم—از شناخت دقیق نیاز شروع می‌کنیم،
+        مسیر اجرا را مرحله‌ای جلو می‌بریم و محصولی تحویل می‌دهم که هم پایدار و مقیاس‌پذیر باشد و هم استفاده‌اش روان و لذت‌بخش.
+        بسته به هدف هر کسب‌وکار، ابزار مناسب را انتخاب می‌کنم تا بهترین نتیجه به‌دست بیاید.
+      </p>
+
+      <!-- Key points -->
+      <ul class="mx-auto mt-6 grid max-w-3xl grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-text">
+        <li class="flex items-center justify-center gap-2 rounded-xl2 border border-border bg-surface-1 px-3 py-2">
+          <i class="bi bi-diagram-3 text-accent"></i>
+          کد تمیز و قابل نگه‌داری
+        </li>
+        <li class="flex items-center justify-center gap-2 rounded-xl2 border border-border bg-surface-1 px-3 py-2">
+          <i class="bi bi-speedometer2 text-accent"></i>
+          بهینه‌سازی عملکرد و سئوی فنی با معیارهای قابل‌سنجش
+        </li>
+        <li class="flex items-center justify-center gap-2 rounded-xl2 border border-border bg-surface-1 px-3 py-2">
+          <i class="bi bi-people text-accent"></i>
+          ارتباط شفاف، دموهای منظم و تحویل به‌موقع
+        </li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- Services Section -->
-<section class="py-4 py-md-5">
-  <h2 class="text-center mb-4">مهارت‌ها و خدمات طراحی سایت</h2>
-  <div class="row justify-content-center">
-    {% for service in services %}
-      <div class="col-12 col-md-4 mb-4">
-        <div class="text-center p-3">
-          <i class="bi {{ service.icon }} text-primary mb-3" style="font-size: clamp(1.8rem, 5vw, 2.5rem);"></i>
-          <h3 class="card-title" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem);">{{ service.title }}</h3>
-          <p class="card-text">{{ service.description }}</p>
+<!-- Cooperation process -->
+<section class="py-8 md:py-12">
+  <div class="max-w-screen-lg mx-auto px-4">
+    <!-- Centered heading with inline underline -->
+    <div class="text-center">
+      <h2 class="relative inline-block text-2xl md:text-3xl font-extrabold pb-2 text-highlight">
+        مسیر همکاری
+        <span style="display:block; height:4px; border-radius:9999px;
+                     background:linear-gradient(90deg,#599692,#7aaba8,#dfe5ec);
+                     margin-top:6px;"></span>
+      </h2>
+    </div>
+
+    <p class="mt-2 text-center text-text">از شروع گفتگو تا تحویل نهایی در سه گام</p>
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Step 1 -->
+      <article class="reveal rounded-xl2 border border-border bg-surface-2 p-6 transition hover:-translate-y-1 hover:shadow-soft">
+        <div class="flex items-start gap-3">
+          <!-- Persian numeral badge -->
+          <span class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-accent text-accent font-bold text-base">
+            &#x06F1;
+          </span>
+          <div>
+            <h3 class="font-bold text-highlight">کشف نیازها</h3>
+            <p class="mt-1 leading-7 text-text text-[15px]">
+              گفت‌وگوی اولیه برای شناخت اهداف و تعیین محدوده‌ی پروژه و معیارهای موفقیت.
+            </p>
+          </div>
         </div>
-      </div>
-    {% empty %}
-      <div class="text-center text-muted">هیچ خدمتی ثبت نشده است.</div>
-    {% endfor %}
+      </article>
+
+      <!-- Step 2 -->
+      <article class="reveal rounded-xl2 border border-border bg-surface-2 p-6 transition hover:-translate-y-1 hover:shadow-soft">
+        <div class="flex items-start gap-3">
+          <span class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-accent text-accent font-bold text-base">
+            &#x06F2;
+          </span>
+          <div>
+            <h3 class="font-bold text-highlight">ساخت و توسعه</h3>
+            <p class="mt-1 leading-7 text-text text-[15px]">
+              طراحی و پیاده‌سازی تدریجی با Django، دریافت بازخورد دوره‌ای و توجه به امنیت و عملکرد.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Step 3 -->
+      <article class="reveal rounded-xl2 border border-border bg-surface-2 p-6 transition hover:-translate-y-1 hover:shadow-soft">
+        <div class="flex items-start gap-3">
+          <span class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-accent text-accent font-bold text-base">
+            &#x06F3;
+          </span>
+          <div>
+            <h3 class="font-bold text-highlight">راه‌اندازی و پشتیبانی</h3>
+            <p class="mt-1 leading-7 text-text text-[15px]">
+              تحویل نهایی، مستندسازی کوتاه، مانیتورینگ اولیه و آمادگی برای بهبودهای بعدی.
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
+
+<!-- Services -->
+<section class="py-12 md:py-16">
+  <div class="max-w-screen-lg mx-auto px-4">
+    <!-- Centered heading with inline underline -->
+    <div class="text-center">
+      <h2 class="relative inline-block text-2xl md:text-3xl font-extrabold pb-2 text-highlight">
+        خدمات و مهارت ها
+        <span style="display:block; height:4px; border-radius:9999px;
+                    background:linear-gradient(90deg,#599692,#7aaba8,#dfe5ec);
+                    margin-top:6px;"></span>
+      </h2>
+    </div>
+
+    <p class="mt-2 text-center text-text reveal">
+      از ایده تا دیپلوی: طراحی UX/UI، بک‌اند Django، سئو و بهینه‌سازی سرعت.
+    </p>
+
+    <!-- Responsive cards -->
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for service in services %}
+        <article class="reveal rounded-xl2 border border-border bg-surface-2 p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-soft">
+          <i class="bi {{ service.icon }} text-2xl md:text-3xl text-accent"></i>
+          <h3 class="mt-3 text-lg font-semibold text-highlight">{{ service.title }}</h3>
+          <p class="mt-1 text-text">{{ service.description }}</p>
+        </article>
+      {% empty %}
+        <div class="text-center text-text">هنوز خدمتی ثبت نشده است.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-8">
+  <div class="max-w-screen-lg mx-auto px-4">
+    <div class="reveal flex flex-col items-center justify-between gap-4 rounded-xl2 border border-border bg-gradient-to-l from-surface-2 to-surface-1 p-6 md:flex-row shadow-soft">
+      <div>
+        <h3 class="text-lg font-bold text-highlight">به یک سایت حرفه‌ای نیاز دارید؟</h3>
+        <p class="text-text">نیاز های شما برای داشتن یک وبسایت چیست ؟ بیایید با مشاوره رایگان شروع کنیم.</p>
+      </div>
+      <a href="{% url 'contact' %}" class="btn">درخواست مشاوره</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+/* Reveal on scroll (IntersectionObserver) */
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('show');
+        io.unobserve(e.target);
+      }
+    })
+  }, {threshold: 0.15});
+  els.forEach(el=>io.observe(el));
+})();
+</script>
 {% endblock %}

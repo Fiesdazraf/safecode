@@ -13,18 +13,15 @@ class ContactForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'placeholder': 'نام شما',
-                'class': 'form-control mb-3 text-end rtl-input',
-                'dir': 'rtl'
+                'class': 'form-control rtl-input',
             }),
             'email': forms.EmailInput(attrs={
                 'placeholder': 'ایمیل شما',
-                'class': 'form-control mb-3 text-end rtl-input',
-                'dir': 'rtl'
+                'class': 'form-control ltr-input',
             }),
             'message': forms.Textarea(attrs={
                 'placeholder': 'متن پیام شما',
-                'class': 'form-control mb-3 text-end rtl-input',
+                'class': 'form-control rtl-input',
                 'rows': 5,
-                'dir': 'rtl',
             }),
         }
