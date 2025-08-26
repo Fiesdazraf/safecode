@@ -1,30 +1,55 @@
 """
 Django settings for mysite project (SafeCode Portfolio).
-
-Optimized for deployment on Koyeb.
+Ready for local development and deployment (PythonAnywhere / Koyeb).
 """
 
 from pathlib import Path
 import os
 from urllib.parse import urlparse
 
-# Base directory
+# ------------------------------------------------------------------------------
+# Base & environment
+# ------------------------------------------------------------------------------
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load .env in local dev
+from dotenv import load_dotenv  # comment: load environment variables if present
+env_file = BASE_DIR / ".env"
+if env_file.exists():
+    load_dotenv(env_file, override=True)
+
 # ------------------------------------------------------------------------------
-# Security & Core
+# Security & core
 # ------------------------------------------------------------------------------
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "insecure-key")
-DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "insecure-key-for-dev-only")
 
+# Default DEBUG=True for local, set DJANGO_DEBUG=False on servers
+DEBUG = os.getenv("DJANGO_DEBUG", "True").strip().lower() == "true"
+
+# Allowed hosts
+_default_hosts = "localhost,127.0.0.1,farzadseif.pythonanywhere.com"
 ALLOWED_HOSTS = [
-    h.strip() for h in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()
+    h.strip()
+    for h in os.getenv("DJANGO_ALLOWED_HOSTS", _default_hosts).split(",")
+    if h.strip()
 ]
 
-# CSRF trusted origins (comma separated, must include scheme)
-_CSRF = os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "")
+# CSRF trusted origins
+_default_csrf = "https://farzadseif.pythonanywhere.com"
+_CSRF = os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", _default_csrf)
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in _CSRF.split(",") if o.strip()]
+
+# Relax for local dev
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+    CSRF_TRUSTED_ORIGINS = [
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+        "http://127.0.0.1:8001",
+        "http://localhost:8001",
+    ]
 
 # ------------------------------------------------------------------------------
 # Applications
@@ -38,7 +63,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
-    # your apps
+    # local apps
     "main",
     "blog",
     # third-party
@@ -115,7 +140,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # ------------------------------------------------------------------------------
 
-LANGUAGE_CODE = "fa"  # فارسی برای سایت
+LANGUAGE_CODE = "en"
 TIME_ZONE = os.getenv("TIME_ZONE", "Asia/Tehran")
 USE_I18N = True
 USE_TZ = True
@@ -133,13 +158,18 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # ------------------------------------------------------------------------------
-# Email (SMTP)
+# Email
 # ------------------------------------------------------------------------------
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+if DEBUG:
+    # comment: print emails to console in dev
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True").strip().lower() == "true"
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
@@ -161,6 +191,8 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+else:
+    SECURE_SSL_REDIRECT = False
 
 # ------------------------------------------------------------------------------
 # Default PK
