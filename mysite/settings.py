@@ -158,21 +158,27 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # ------------------------------------------------------------------------------
-# Email
+# Email (Gmail SMTP if USE_ANYMAIL=False)
 # ------------------------------------------------------------------------------
 
-if DEBUG:
-    # comment: print emails to console in dev
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+USE_ANYMAIL = os.getenv("USE_ANYMAIL", "False").lower() == "true"
+
+if USE_ANYMAIL:
+    INSTALLED_APPS += ["anymail"]
+    EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+    ANYMAIL = {
+        "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY", ""),
+        "MAILGUN_SENDER_DOMAIN": os.getenv("MAILGUN_DOMAIN", ""),
+    }
+    DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", f"no-reply@{os.getenv('MAILGUN_DOMAIN','')}")
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-
-EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
-EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True").strip().lower() == "true"
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+    EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
+    EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+    EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True").strip().lower() == "true"
+    EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER or "no-reply@safecode.local"
 
 # ------------------------------------------------------------------------------
 # Auth
